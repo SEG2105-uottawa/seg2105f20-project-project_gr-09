@@ -1,5 +1,7 @@
 package me.kianbazza.servicenovigrad.data;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import me.kianbazza.servicenovigrad.data.model.LoggedInUser;
 
 /**
@@ -51,4 +53,18 @@ public class LoginRepository {
         }
         return result;
     }
+
+    public Result<LoggedInUser> register(String username, String email, String password, String role) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference newUserRoleRef = database.getReference("/users" + username + "/role");
+        DatabaseReference newUserEmailRef = database.getReference("/users" + username + "/email");
+        DatabaseReference newUserPassRef = database.getReference("/users" + username + "/password");
+
+        newUserRoleRef.setValue(role);
+        newUserEmailRef.setValue(email);
+        newUserPassRef.setValue(password);
+
+    }
+
 }
