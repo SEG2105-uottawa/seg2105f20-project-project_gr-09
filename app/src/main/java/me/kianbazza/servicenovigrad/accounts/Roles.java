@@ -2,7 +2,7 @@ package me.kianbazza.servicenovigrad.accounts;
 
 public class Roles {
 
-    enum Role {
+    public enum Role {
 
         ADMIN,
         EMPLOYEE,
