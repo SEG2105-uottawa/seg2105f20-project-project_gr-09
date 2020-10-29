@@ -1,4 +1,4 @@
-package me.kianbazza.servicenovigrad;
+package me.kianbazza.servicenovigrad.misc;
 
 public class Vars {
 

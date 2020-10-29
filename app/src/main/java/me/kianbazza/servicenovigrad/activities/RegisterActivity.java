@@ -12,7 +12,7 @@ import android.os.Bundle;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import me.kianbazza.servicenovigrad.R;
-import me.kianbazza.servicenovigrad.Vars;
+import me.kianbazza.servicenovigrad.misc.Vars;
 import me.kianbazza.servicenovigrad.accounts.*;
 
 public class RegisterActivity extends AppCompatActivity {
