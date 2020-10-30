@@ -2,21 +2,21 @@ package me.kianbazza.servicenovigrad.accounts;
 
 public abstract class Account {
 
-    private String name;
+    private String username;
     private String email;
     private String password;
     private Roles.Role role;
 
-    public Account(String name, String email, String password, Roles.Role role) {
+    public Account(String username, String email, String password, Roles.Role role) {
 
-        this.name = name;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     public String getEmail() {
