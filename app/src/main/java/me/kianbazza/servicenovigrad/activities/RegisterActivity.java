@@ -2,16 +2,15 @@ package me.kianbazza.servicenovigrad.activities;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import me.kianbazza.servicenovigrad.R;
+import me.kianbazza.servicenovigrad.misc.AccountHelper;
 import me.kianbazza.servicenovigrad.misc.Vars;
 import me.kianbazza.servicenovigrad.accounts.*;
 
@@ -19,6 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Button button;
     private EditText username, email, password, role;
+    private TextView loginInstead;
     private Spinner roles;
 
     @Override
@@ -33,12 +33,11 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         roles = findViewById(R.id.spinner_Roles);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createAccount();
-            }
-        });
+        loginInstead = findViewById(R.id.login_registerScreen);
+
+        button.setOnClickListener( v -> createAccount() );
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        loginInstead.setOnClickListener(( l -> startActivity(intent) ));
 
     }
 
@@ -75,37 +74,20 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
             }
 
-            if (validate(account)) {
+            AccountHelper accountHelper = new AccountHelper();
 
-                register(account);
+            if ( !accountHelper.isRegistered(account.getUsername()) ) {
+
+                accountHelper.register(account);
                 Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                 startActivity(intent);
 
+            } else {
+                Toast.makeText(this, "An account already exists with this username!", Toast.LENGTH_SHORT).show();
             }
 
 
         }
-
-    }
-
-    private boolean validate(Account account) {
-
-        return true;
-
-
-
-    }
-
-    private void register(Account account) {
-
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference userRoleRef = db.getReference("users/" + account.getUsername() + "/role");
-        DatabaseReference userEmailRef = db.getReference("users/" + account.getUsername() + "/email");
-        DatabaseReference userPassRef = db.getReference("users/" + account.getUsername() + "/password");
-
-        userRoleRef.setValue(account.getRole());
-        userEmailRef.setValue(account.getEmail());
-        userPassRef.setValue(account.getPassword());
 
     }
 

@@ -40,5 +40,9 @@
                 android:text="Create Account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/btn_Register"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/login_registerScreen"
+                android:text="@string/action_login" android:clickable="true" android:gravity="center"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
