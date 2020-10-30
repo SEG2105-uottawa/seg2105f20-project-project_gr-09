@@ -99,9 +99,9 @@ public class RegisterActivity extends AppCompatActivity {
     private void register(Account account) {
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference userRoleRef = db.getReference("users/" + account.getName() + "/role");
-        DatabaseReference userEmailRef = db.getReference("users/" + account.getName() + "/email");
-        DatabaseReference userPassRef = db.getReference("users/" + account.getName() + "/password");
+        DatabaseReference userRoleRef = db.getReference("users/" + account.getUsername() + "/role");
+        DatabaseReference userEmailRef = db.getReference("users/" + account.getUsername() + "/email");
+        DatabaseReference userPassRef = db.getReference("users/" + account.getUsername() + "/password");
 
         userRoleRef.setValue(account.getRole());
         userEmailRef.setValue(account.getEmail());
