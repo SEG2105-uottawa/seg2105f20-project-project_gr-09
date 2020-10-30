@@ -7,4 +7,31 @@
         android:layout_height="match_parent"
         tools:context=".activities.LoginActivity">
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <Space
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/username_loginScreen" android:hint="@string/hint_username" android:autofillHints=""/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/password_loginScreen" android:hint="@string/hint_password" android:autofillHints=""/>
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/btn_SignIn" android:text="@string/action_sign_in"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/register_loginScreen"
+                android:text="@string/action_register" android:clickable="true" android:gravity="center"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
