@@ -15,6 +15,19 @@ public abstract class Account {
         this.role = role;
     }
 
+    public Account convertAccountType(Roles.Role newRole) {
+        switch (newRole) {
+            case ADMIN:
+                return new AdminAccount(username, email, password);
+            case EMPLOYEE:
+                return new EmployeeAccount(username, email, password);
+            case CUSTOMER:
+                return new CustomerAccount(username, email, password);
+            default:
+                return this;
+        }
+    }
+
     public String getUsername() {
         return username;
     }
