@@ -1,13 +1,15 @@
 package me.kianbazza.servicenovigrad.accounts;
 
-public abstract class Account {
+import android.os.Parcelable;
+
+public abstract class Account implements Parcelable {
 
     private String username;
     private String email;
     private String password;
-    private Roles.Role role;
+    private Role role;
 
-    public Account(String username, String email, String password, Roles.Role role) {
+    public Account(String username, String email, String password, Role role) {
 
         this.username = username;
         this.email = email;
@@ -15,7 +17,7 @@ public abstract class Account {
         this.role = role;
     }
 
-    public Account convertAccountType(Roles.Role newRole) {
+    public Account convertAccountType(Role newRole) {
         switch (newRole) {
             case ADMIN:
                 return new AdminAccount(username, email, password);
@@ -40,7 +42,7 @@ public abstract class Account {
         return password;
     }
 
-    public Roles.Role getRole() {
+    public Role getRole() {
         return role;
     }
 

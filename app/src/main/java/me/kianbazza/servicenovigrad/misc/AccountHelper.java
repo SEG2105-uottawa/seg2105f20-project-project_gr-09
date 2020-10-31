@@ -1,8 +1,11 @@
 package me.kianbazza.servicenovigrad.misc;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
 import me.kianbazza.servicenovigrad.accounts.*;
+import me.kianbazza.servicenovigrad.database.DatabaseManager;
+import me.kianbazza.servicenovigrad.database.FirebaseCallback;
+
+import java.util.HashMap;
 
 public class AccountHelper {
 
@@ -22,67 +25,6 @@ public class AccountHelper {
         userPassRef.setValue(account.getPassword());
 
         return true;
-
-    }
-
-    private boolean authenticate(String username, String password) {
-
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference userRef = db.getReference("users/" + username);
-        DatabaseReference userPassRef = userRef.child("password");
-
-        if (password.equals(userPassRef.toString())) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    /**
-     * Returns an Account object corresponding to the account with the inputted username
-     * and password. Username must correspond to an existing account, and password must
-     * match that of the account with the inputted username.
-     * @param username the account's username
-     * @param password the account's password
-     * @return Account object corresponding to the inputted username and password
-     * @return Null if username does not match any account, or password is incorrect
-     */
-    public Account getAccount(String username, String password) {
-
-        if (!isRegistered(username)) {
-            return null;
-        }
-
-        if ( authenticate(username, password) ) {
-            FirebaseDatabase db = FirebaseDatabase.getInstance();
-            DatabaseReference userRef = db.getReference("users/" + username);
-
-            DatabaseReference userRoleRef = userRef.child("role");
-            DatabaseReference userEmailRef = userRef.child("email");
-            DatabaseReference userPassRef = userRef.child("password");
-
-            Account account;
-
-            switch (Roles.fromString(userRoleRef.toString())) {
-                case CUSTOMER:
-                    account = new CustomerAccount(username, userEmailRef.toString(), password);
-                    break;
-                case EMPLOYEE:
-                    account = new EmployeeAccount(username, userEmailRef.toString(), password);
-                    break;
-                case ADMIN:
-                    account = new AdminAccount(username, userEmailRef.toString(), password);
-                    break;
-                default:
-                    return null;
-            }
-
-            return account;
-
-        } else {
-            return null;
-        }
 
     }
 
@@ -107,6 +49,20 @@ public class AccountHelper {
     public boolean isRegistered(Account account) {
         String username = account.getUsername();
         return isRegistered(username);
+
+    }
+
+    public static Role roleFromString(String s) {
+
+        for (Role r : Role.values()) {
+
+            if (s.equalsIgnoreCase( r.name() )) {
+                return r;
+            }
+
+        }
+
+        return Role.NONE;
 
     }
 

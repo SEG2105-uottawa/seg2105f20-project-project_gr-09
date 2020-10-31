@@ -61,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             Account account;
 
-            switch (Roles.fromString(roleStr)) {
+            switch (AccountHelper.roleFromString(roleStr)) {
                 case CUSTOMER:
                     account = new CustomerAccount(usernameStr, emailStr, passwordStr);
                     break;

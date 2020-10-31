@@ -9,7 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import me.kianbazza.servicenovigrad.R;
-import me.kianbazza.servicenovigrad.accounts.Account;
+import me.kianbazza.servicenovigrad.accounts.*;
+import me.kianbazza.servicenovigrad.database.DatabaseManager;
 import me.kianbazza.servicenovigrad.misc.AccountHelper;
 
 public class LoginActivity extends AppCompatActivity {
@@ -53,15 +54,44 @@ public class LoginActivity extends AppCompatActivity {
 
             if (accountHelper.isRegistered(usernameStr)) {
                 // Account with this username exists
-                Account account = accountHelper.getAccount(usernameStr, passwordStr);
-                if (account!=null) {
-                    // Password matches!
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                } else {
-                    // Password is incorrect
-                    Toast.makeText(this, "Incorrect password!", Toast.LENGTH_LONG).show();
-                }
+                DatabaseManager databaseManager = new DatabaseManager();
+                databaseManager.readChildrenData("users/" + usernameStr, data -> {
+
+                    String correctPassword = data.get("password");
+
+                    if (passwordStr.equals(correctPassword)) {
+                        // Password matches!
+
+                        String emailStr = data.get("email");
+                        Role role = AccountHelper.roleFromString( data.get("role") );
+
+                        Account account;
+
+                        switch (role) {
+                            case CUSTOMER:
+                                account = new CustomerAccount(usernameStr, emailStr, passwordStr);
+                                break;
+                            case EMPLOYEE:
+                                account = new EmployeeAccount(usernameStr, emailStr, passwordStr);
+                                break;
+                            case ADMIN:
+                                account = new AdminAccount(usernameStr, emailStr, passwordStr);
+                                break;
+                            default:
+                                return;
+                        }
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.putExtra("Account", account);
+                        runOnUiThread(() -> {
+                            startActivity(intent);
+                        });
+
+                    } else {
+                        // Password is incorrect
+                        Toast.makeText(this, "Incorrect password!", Toast.LENGTH_LONG).show();
+                    }
+                });
+
             } else {
                 // Account with this username is not already registered.
                 Toast.makeText(this, "Username has not been registered yet.", Toast.LENGTH_SHORT).show();
