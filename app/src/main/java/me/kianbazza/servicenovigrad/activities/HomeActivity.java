@@ -1,5 +1,7 @@
 package me.kianbazza.servicenovigrad.activities;
 
+import android.content.Intent;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,11 +17,15 @@ public class HomeActivity extends AppCompatActivity {
 
         Account account = getIntent().getParcelableExtra("Account");
         TextView username, role;
+        Button btnLogout;
 
         username = findViewById(R.id.viewUsername_homeScreen);
         role = findViewById(R.id.viewRole_homeScreen);
+        btnLogout = findViewById(R.id.btn_Logout);
 
         username.setText(account.getUsername());
         role.setText(account.getRole().name());
+
+        btnLogout.setOnClickListener(l -> startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
     }
 }

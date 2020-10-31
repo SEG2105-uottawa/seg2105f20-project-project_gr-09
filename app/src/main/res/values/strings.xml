@@ -11,4 +11,9 @@
     <string name="hint_password">Password</string>
     <string name="action_sign_in">Sign In</string>
     <string name="action_register">Don\'t have an account? Register now.</string>
+    <!-- Strings related to HOME -->
+    <string name="logged_in">Logged in.</string>
+    <string name="usernameKey">Username: </string>
+    <string name="roleKey">Role: </string>
+    <string name="action_logout">Logout</string>
 </resources>
