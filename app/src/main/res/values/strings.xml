@@ -13,7 +13,21 @@
     <string name="action_register">Don\'t have an account? Register now.</string>
     <!-- Strings related to HOME -->
     <string name="logged_in">Logged in.</string>
-    <string name="usernameKey">Username: </string>
-    <string name="roleKey">Role: </string>
+    <string name="usernameKey">Username:</string>
+    <string name="roleKey">Role:</string>
     <string name="action_logout">Logout</string>
+    <string name="title_services">Manage Services</string>
+    <string name="title_accounts">Manage Accounts</string>
+    <string name="action_addService">Add</string>
+    <!-- Strings related to Add Service Fragment -->
+    <string name="action_createService">Create</string>
+    <string name="action_deleteService">Delete</string>
+    <string name="action_modifyService">Save</string>
+    <string name="action_lookupService">Lookup</string>
+
+    <string name="hint_serviceName">Short Name for Service</string>
+    <string name="hint_serviceDisplayname">Full Name of Service</string>
+    <string name="hint_servicePrice">Price</string>
+    <string name="hint_serviceRequiredInfo">Required Customer Information</string>
+    <string name="hint_serviceDocuments">Required Documents</string>
 </resources>

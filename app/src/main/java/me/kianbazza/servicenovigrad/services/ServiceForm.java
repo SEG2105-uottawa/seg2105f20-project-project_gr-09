@@ -20,4 +20,7 @@ public class ServiceForm {
         }
     }
 
+    public HashMap<String, String> getForm() {
+        return form;
+    }
 }

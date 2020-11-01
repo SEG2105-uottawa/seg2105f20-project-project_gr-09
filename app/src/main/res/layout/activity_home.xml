@@ -61,5 +61,85 @@
               android:layout_height="wrap_content" android:id="@+id/viewRole_homeScreen" android:textSize="18sp"
               android:layout_weight="1"/>
     </LinearLayout>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="35dp"/>
+    <TextView
+            android:text="@string/title_services"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/title_Services" android:textSize="18sp"
+            android:textColor="#000000" android:textStyle="bold"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+      <EditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:inputType="textPersonName"
+              android:ems="10"
+              android:id="@+id/serviceNameTextField" android:hint="@string/hint_serviceName"/>
+      <EditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:inputType="textPersonName"
+              android:ems="10"
+              android:id="@+id/serviceDisplaynameTextField2" android:hint="@string/hint_serviceDisplayname"/>
+      <EditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:inputType="textPersonName"
+              android:ems="10"
+              android:id="@+id/servicePriceTextField" android:hint="@string/hint_servicePrice"/>
+      <EditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:inputType="textPersonName"
+              android:ems="10"
+              android:id="@+id/serviceRequiredInfoTextField2" android:hint="@string/hint_serviceRequiredInfo"/>
+      <EditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:inputType="textPersonName"
+              android:ems="10"
+              android:id="@+id/serviceDocumentsTextField" android:hint="@string/hint_serviceDocuments"/>
+      <LinearLayout
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+        <Button
+                android:text="@string/action_lookupService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/btn_lookupService" android:layout_weight="1"/>
+        <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" android:layout_weight="1"/>
+        <Button
+                android:text="@string/action_createService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/btn_addService"/>
+        <Button
+                android:text="@string/action_deleteService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/btn_deleteService" android:layout_weight="1"/>
+        <Button
+                android:text="@string/action_modifyService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/btn_modifyService" android:layout_weight="1"/>
+      </LinearLayout>
+    </LinearLayout>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" android:layout_weight="1"/>
+    <TextView
+            android:text="@string/title_accounts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/title_Accounts"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    </LinearLayout>
   </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
