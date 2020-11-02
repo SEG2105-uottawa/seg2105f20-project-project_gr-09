@@ -29,8 +29,8 @@
     <string name="hint_serviceName">Short Name for Service</string>
     <string name="hint_serviceDisplayname">Full Name of Service</string>
     <string name="hint_servicePrice">Price</string>
-    <string name="hint_serviceRequiredInfo">Required Customer Info (separate with comma)</string>
-    <string name="hint_serviceDocuments">Required Documents (separate with comma)</string>
+    <string name="hint_serviceRequiredInfo">Required Customer Info (; between items)</string>
+    <string name="hint_serviceDocuments">Required Documents (; between items)</string>
 
     <string name="hint_accountName">Account Name</string>
     <string name="action_lookupAccount">Lookup</string>
