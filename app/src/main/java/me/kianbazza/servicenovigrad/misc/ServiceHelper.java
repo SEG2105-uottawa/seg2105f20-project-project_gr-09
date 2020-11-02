@@ -8,44 +8,30 @@ import me.kianbazza.servicenovigrad.services.Service;
 import me.kianbazza.servicenovigrad.services.ServiceDocument;
 import me.kianbazza.servicenovigrad.services.ServiceForm;
 
+import java.util.Arrays;
+
 public class ServiceHelper {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public boolean createService(Service service) {
-        if ( isService(service) ) {
-            return false;
-        }
+    public void createService(Service service) {
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference serviceNameRef = db.getReference("users/" + service.getName() + "/name");
-        DatabaseReference servicePriceRef = db.getReference("users/" + service.getName() + "/price");
-        DatabaseReference serviceFormRef = db.getReference("users/" + service.getName() + "/form");
-        DatabaseReference serviceDocsRef = db.getReference("users/" + service.getName() + "/docs");
+        DatabaseReference serviceNameRef = db.getReference("services/" + service.getName() + "/display-name");
+        DatabaseReference servicePriceRef = db.getReference("services/" + service.getName() + "/price");
+        DatabaseReference serviceFormRef = db.getReference("services/" + service.getName() + "/form");
+        DatabaseReference serviceDocsRef = db.getReference("services/" + service.getName() + "/docs");
 
         serviceNameRef.setValue(service.getDisplayName());
         servicePriceRef.setValue(service.getPrice());
 
         ServiceForm form = service.getFormTemplate();
-        form.getForm().forEach((field, value) -> serviceFormRef.child(field).setValue(value));
+        form.getForm().forEach((field, value) -> serviceFormRef.child(field).setValue(""));
 
         ServiceDocument[] docs = service.getDocumentsTemplate();
         for (ServiceDocument document : docs) {
-            serviceDocsRef.child(document.getName()).setValue(document.getLinkToDoc());
+            serviceDocsRef.child(document.getName()).setValue("");
         }
 
-        return true;
-
-    }
-
-    public boolean isService(Service service) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference servicesRef = db.getReference("services/");
-
-        if (servicesRef.child(service.getName())==null) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
 }

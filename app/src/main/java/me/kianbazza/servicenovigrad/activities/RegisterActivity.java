@@ -2,17 +2,18 @@ package me.kianbazza.servicenovigrad.activities;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
 import me.kianbazza.servicenovigrad.R;
+import me.kianbazza.servicenovigrad.database.DatabaseManager;
+import me.kianbazza.servicenovigrad.database.FirebaseCallback;
 import me.kianbazza.servicenovigrad.misc.AccountHelper;
 import me.kianbazza.servicenovigrad.misc.Vars;
 import me.kianbazza.servicenovigrad.accounts.*;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -61,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             Account account;
 
-            switch (AccountHelper.roleFromString(roleStr)) {
+            switch (Role.fromString(roleStr)) {
                 case CUSTOMER:
                     account = new CustomerAccount(usernameStr, emailStr, passwordStr);
                     break;
@@ -70,22 +71,37 @@ public class RegisterActivity extends AppCompatActivity {
                     break;
                 case ADMIN:
                     account = new AdminAccount(usernameStr, emailStr, passwordStr);
+                    break;
                 default:
                     return;
             }
 
             AccountHelper accountHelper = new AccountHelper();
 
-            if ( !accountHelper.isRegistered(account.getUsername()) ) {
+            DatabaseManager databaseManager = new DatabaseManager();
 
-                accountHelper.register(account);
-                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-                startActivity(intent);
+            databaseManager.readChildrenReference("users/", new FirebaseCallback() {
+                @Override
+                public void getData(HashMap<String, Object> data) {
 
-            } else {
-                Toast.makeText(this, "An account already exists with this username!", Toast.LENGTH_SHORT).show();
-            }
+                }
 
+                @Override
+                public void getRef(HashMap<String, DataSnapshot> data) {
+                    if ( !data.containsKey(account.getUsername()) ) {
+                        // Account does not exist
+                        // Go ahead with account registration
+                        accountHelper.registerAccount(account);
+                        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                        intent.putExtra("Account", account);
+                        runOnUiThread(() -> startActivity(intent));
+
+                    } else {
+                        // Account with this username already exists
+                        Toast.makeText(RegisterActivity.this, "An account with this username already exists.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
         }
 

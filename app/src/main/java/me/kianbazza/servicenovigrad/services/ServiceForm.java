@@ -13,6 +13,7 @@ public class ServiceForm {
      *                     (just the name key, NOT the actual value)
      */
     public ServiceForm(String[] requiredInfo) {
+        form = new HashMap<>();
         // Add the name of each piece of required info into the form as a key
         // Leave value as "" to be filled out by user when applying
         for(String infoName : requiredInfo) {

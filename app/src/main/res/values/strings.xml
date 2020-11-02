@@ -24,10 +24,15 @@
     <string name="action_deleteService">Delete</string>
     <string name="action_modifyService">Save</string>
     <string name="action_lookupService">Lookup</string>
+    <string name="action_clearServiceTextFields">Clear</string>
 
     <string name="hint_serviceName">Short Name for Service</string>
     <string name="hint_serviceDisplayname">Full Name of Service</string>
     <string name="hint_servicePrice">Price</string>
-    <string name="hint_serviceRequiredInfo">Required Customer Information</string>
-    <string name="hint_serviceDocuments">Required Documents</string>
+    <string name="hint_serviceRequiredInfo">Required Customer Info (separate with comma)</string>
+    <string name="hint_serviceDocuments">Required Documents (separate with comma)</string>
+
+    <string name="hint_accountName">Account Name</string>
+    <string name="action_lookupAccount">Lookup</string>
+    <string name="action_deleteAccount">Delete Account</string>
 </resources>

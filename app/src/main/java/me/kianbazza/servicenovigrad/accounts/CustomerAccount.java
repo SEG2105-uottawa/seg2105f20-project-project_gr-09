@@ -35,6 +35,6 @@ public class CustomerAccount extends Account {
     };
 
     private CustomerAccount(Parcel in) {
-        super(in.readString(), in.readString(), in.readString(), AccountHelper.roleFromString(in.readString()));
+        super(in.readString(), in.readString(), in.readString(), Role.valueOf(in.readString()));
     }
 }

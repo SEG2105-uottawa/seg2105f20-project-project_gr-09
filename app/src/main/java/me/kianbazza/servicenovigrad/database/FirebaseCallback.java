@@ -1,12 +1,13 @@
 package me.kianbazza.servicenovigrad.database;
 
-import android.content.Context;
-import me.kianbazza.servicenovigrad.accounts.Account;
-
+import com.google.firebase.database.DataSnapshot;
+;
 import java.util.HashMap;
 
 public interface FirebaseCallback {
 
-    void getData(HashMap<String, String> data);
+    void getData(HashMap<String, Object> data);
+
+    void getRef(HashMap<String, DataSnapshot> data);
 
 }
