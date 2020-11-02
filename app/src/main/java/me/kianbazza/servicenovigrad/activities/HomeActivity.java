@@ -91,6 +91,8 @@ public class HomeActivity extends AppCompatActivity {
         btnLookupAccount.setOnClickListener(l -> lookupAccount());
         btnDeleteAccount.setOnClickListener(l -> deleteAccount());
 
+        accountStatus.setText("");
+
         if (account.getRole()!= Role.ADMIN) {
             services.setVisibility(View.INVISIBLE);
             accounts.setVisibility(View.INVISIBLE);
