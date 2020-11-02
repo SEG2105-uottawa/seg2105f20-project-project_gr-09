@@ -5,15 +5,15 @@ public class Service {
     private String name;
     private String displayName;
     private double price;
-    private ServiceForm formTemplate;
-    private ServiceDocument[] documentsTemplate;
+    private ServiceForm requiredCustomerInfo;
+    private ServiceDocument[] requiredDocuments;
 
-    public Service(String name, String displayName, double price, ServiceForm formTemplate, ServiceDocument[] documentsTemplate) {
+    public Service(String name, String displayName, double price, ServiceForm requiredCustomerInfo, ServiceDocument[] requiredDocuments) {
         this.name = name;
         this.displayName = displayName;
         this.price = price;
-        this.formTemplate = formTemplate;
-        this.documentsTemplate = documentsTemplate;
+        this.requiredCustomerInfo = requiredCustomerInfo;
+        this.requiredDocuments = requiredDocuments;
     }
 
     public String getName() {
@@ -40,20 +40,20 @@ public class Service {
         this.price = price;
     }
 
-    public ServiceForm getFormTemplate() {
-        return formTemplate;
+    public ServiceForm getRequiredCustomerInfo() {
+        return requiredCustomerInfo;
     }
 
-    public void setFormTemplate(ServiceForm formTemplate) {
-        this.formTemplate = formTemplate;
+    public void setRequiredCustomerInfo(ServiceForm requiredCustomerInfo) {
+        this.requiredCustomerInfo = requiredCustomerInfo;
     }
 
-    public ServiceDocument[] getDocumentsTemplate() {
-        return documentsTemplate;
+    public ServiceDocument[] getRequiredDocuments() {
+        return requiredDocuments;
     }
 
-    public void setDocumentsTemplate(ServiceDocument[] documentsTemplate) {
-        this.documentsTemplate = documentsTemplate;
+    public void setRequiredDocuments(ServiceDocument[] requiredDocuments) {
+        this.requiredDocuments = requiredDocuments;
     }
 
 

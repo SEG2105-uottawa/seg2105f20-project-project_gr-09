@@ -8,8 +8,6 @@ import me.kianbazza.servicenovigrad.services.Service;
 import me.kianbazza.servicenovigrad.services.ServiceDocument;
 import me.kianbazza.servicenovigrad.services.ServiceForm;
 
-import java.util.Arrays;
-
 public class ServiceHelper {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -24,10 +22,10 @@ public class ServiceHelper {
         serviceNameRef.setValue(service.getDisplayName());
         servicePriceRef.setValue(service.getPrice());
 
-        ServiceForm form = service.getFormTemplate();
-        form.getForm().forEach((field, value) -> serviceFormRef.child(field).setValue(""));
+        ServiceForm form = service.getRequiredCustomerInfo();
+        form.getInputFields().forEach((field, value) -> serviceFormRef.child(field).setValue(""));
 
-        ServiceDocument[] docs = service.getDocumentsTemplate();
+        ServiceDocument[] docs = service.getRequiredDocuments();
         for (ServiceDocument document : docs) {
             serviceDocsRef.child(document.getName()).setValue("");
         }
