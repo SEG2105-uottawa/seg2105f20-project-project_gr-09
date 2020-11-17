@@ -2,7 +2,6 @@ package me.kianbazza.servicenovigrad.accounts;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import me.kianbazza.servicenovigrad.misc.AccountHelper;
 
 public class CustomerAccount extends Account {
 
