@@ -10,7 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import me.kianbazza.servicenovigrad.R;
 import me.kianbazza.servicenovigrad.accounts.Account;
-import me.kianbazza.servicenovigrad.accounts.Role;
+import me.kianbazza.servicenovigrad.accounts.UserRole;
 import me.kianbazza.servicenovigrad.database.DatabaseManager;
 import me.kianbazza.servicenovigrad.database.FirebaseCallback;
 import me.kianbazza.servicenovigrad.misc.Helper;
@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btn_Logout);
 
         username.setText(account.getUsername());
-        role.setText(account.getRole().name());
+        role.setText(account.getRole().getRoleName().toString());
 
         btnLogout.setOnClickListener(l -> startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
 
@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
 
         accountStatus.setText("");
 
-        if (account.getRole()!= Role.ADMIN) {
+        if (account.getRole().getRoleName()!= UserRole.RoleName.ADMIN) {
             services.setVisibility(View.INVISIBLE);
             accounts.setVisibility(View.INVISIBLE);
         }
@@ -415,9 +415,9 @@ public class HomeActivity extends AppCompatActivity {
                     if (data.containsKey(accountNameStr)) {
                         // Account exists
                         DataSnapshot accountInfo = data.get(accountNameStr);
-                        String accountRole = accountInfo.child("role").getValue(String.class);
+                        String accountRoleNameStr = accountInfo.child("role").getValue(String.class);
 
-                        if (Role.valueOf(accountRole)==Role.ADMIN) {
+                        if (UserRole.RoleName.fromString(accountRoleNameStr)==UserRole.RoleName.ADMIN) {
                             // Cannot delete admin account
                             accountStatus.setText("You cannot delete an Admin account.");
                             Toast.makeText(HomeActivity.this, "You cannot delete an Admin account.", Toast.LENGTH_SHORT).show();

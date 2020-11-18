@@ -74,23 +74,12 @@ public class LoginActivity extends AppCompatActivity {
 
                             String emailStr = userData.child("email").getValue(String.class);
                             String roleStr = userData.child("role").getValue(String.class);
-                            Role role = Role.fromString(roleStr);
+                            UserRole.RoleName roleName = UserRole.RoleName.fromString(roleStr);
 
-                            Account account;
+                            AccountHelper accountHelper = new AccountHelper();
 
-                            switch (role) {
-                                case CUSTOMER:
-                                    account = new CustomerAccount(usernameStr, emailStr, passwordStr);
-                                    break;
-                                case EMPLOYEE:
-                                    account = new EmployeeAccount(usernameStr, emailStr, passwordStr);
-                                    break;
-                                case ADMIN:
-                                    account = new AdminAccount(usernameStr, emailStr, passwordStr);
-                                    break;
-                                default:
-                                    return;
-                            }
+                            Account account = new Account(usernameStr, emailStr, passwordStr, roleName);
+
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             intent.putExtra("Account", account);
                             runOnUiThread(() -> {

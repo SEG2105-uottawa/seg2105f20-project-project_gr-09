@@ -60,23 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         } else {
 
-            Account account;
-
-            switch (Role.fromString(roleStr)) {
-                case CUSTOMER:
-                    account = new CustomerAccount(usernameStr, emailStr, passwordStr);
-                    break;
-                case EMPLOYEE:
-                    account = new EmployeeAccount(usernameStr, emailStr, passwordStr);
-                    break;
-                case ADMIN:
-                    account = new AdminAccount(usernameStr, emailStr, passwordStr);
-                    break;
-                default:
-                    return;
-            }
-
             AccountHelper accountHelper = new AccountHelper();
+            UserRole.RoleName roleName = UserRole.RoleName.fromString(roleStr);
+
+            Account account = new Account(usernameStr, emailStr, passwordStr, roleName);
 
             DatabaseManager databaseManager = new DatabaseManager();
 
