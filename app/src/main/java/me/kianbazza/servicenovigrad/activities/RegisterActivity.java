@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                         // Account does not exist
                         // Go ahead with account registration
                         accountHelper.registerAccount(account);
-                        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(RegisterActivity.this, AdminHomeActivity.class);
                         intent.putExtra("Account", account);
                         runOnUiThread(() -> startActivity(intent));
 

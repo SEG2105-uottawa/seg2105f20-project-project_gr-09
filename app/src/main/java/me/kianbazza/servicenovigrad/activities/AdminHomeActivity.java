@@ -1,186 +1,138 @@
 package me.kianbazza.servicenovigrad.activities;
 
 import android.content.Intent;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.*;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.database.*;
 import me.kianbazza.servicenovigrad.R;
 import me.kianbazza.servicenovigrad.accounts.Account;
-import me.kianbazza.servicenovigrad.accounts.UserRole;
-import me.kianbazza.servicenovigrad.database.DatabaseManager;
-import me.kianbazza.servicenovigrad.database.FirebaseCallback;
-import me.kianbazza.servicenovigrad.misc.Helper;
-import me.kianbazza.servicenovigrad.misc.ServiceHelper;
+import me.kianbazza.servicenovigrad.adapters.RecyclerAdapter;
 import me.kianbazza.servicenovigrad.services.Service;
-import me.kianbazza.servicenovigrad.services.ServiceDocument;
-import me.kianbazza.servicenovigrad.services.ServiceForm;
 
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class AdminHomeActivity extends AppCompatActivity {
 
-    DatabaseManager databaseManager;
+    // Account information
+    private Account account;
 
-    private EditText name, displayName, price, requiredInfo, requiredDocs;
-    private Button btnLookupService, btnCreateService, btnDeleteService, btnSaveService, btnClearService;
-    private EditText[] inputFields;
+    // Database
+    private DatabaseReference dbRef;
 
-    private EditText accountName;
-    private TextView accountStatus;
-    private Button btnLookupAccount, btnDeleteAccount;
+    // Interface
+    private TextView username, role;
+    private Button btnLogout, btnAddService;
+    private RecyclerView recyclerView;
 
-    private LinearLayout services, accounts;
+    // Variables
+    private ArrayList<Service> servicesList;
+    private RecyclerAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_admin_home);
 
-        databaseManager = new DatabaseManager();
+        dbRef = FirebaseDatabase.getInstance().getReference();
 
-        Account account = getIntent().getParcelableExtra("Account");
-
-        services = findViewById(R.id.manageServicesContainer);
-        accounts = findViewById(R.id.manageAccountsContainer);
-
-        TextView username, role;
-        Button btnLogout;
+        account = getIntent().getParcelableExtra("Account");
 
         username = findViewById(R.id.viewUsername_homeScreen);
         role = findViewById(R.id.viewRole_homeScreen);
         btnLogout = findViewById(R.id.btn_Logout);
+        btnAddService = findViewById(R.id.btn_admin_addService);
+        recyclerView = findViewById(R.id.recyclerView_admin_listServices);
 
         username.setText(account.getUsername());
         role.setText(account.getRole().getRoleName().toString());
 
-        btnLogout.setOnClickListener(l -> startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
+        btnLogout.setOnClickListener(l -> startActivity(new Intent(AdminHomeActivity.this, LoginActivity.class)));
+        btnAddService.setOnClickListener(l -> openServiceDialog());
 
-        // SERVICES
-        name = findViewById(R.id.serviceNameTextField);
-        displayName = findViewById(R.id.serviceDisplaynameTextField);
-        price = findViewById(R.id.servicePriceTextField);
-        requiredInfo = findViewById(R.id.serviceRequiredInfoTextField);
-        requiredDocs = findViewById(R.id.serviceDocumentsTextField);
+        servicesList = new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
 
-        inputFields = new EditText[] { name, displayName, price, requiredInfo, requiredDocs };
+        getServicesListFromFirebase();
 
-        btnLookupService = findViewById(R.id.btn_lookupService);
-        btnCreateService = findViewById(R.id.btn_addService);
-        btnDeleteService = findViewById(R.id.btn_deleteService);
-        btnSaveService = findViewById(R.id.btn_saveService);
-        btnClearService = findViewById(R.id.btn_clearServiceTextFields);
+    }
 
-        btnLookupService.setOnClickListener(l -> lookupService() );
-        btnCreateService.setOnClickListener(l -> createService() );
-        btnDeleteService.setOnClickListener(l -> deleteService() );
-        btnSaveService.setOnClickListener(l -> saveService() );
-        btnClearService.setOnClickListener(l -> clearService() );
+    private void getServicesListFromFirebase() {
 
-        // ACCOUNTS
-        accountName = findViewById(R.id.accountNameTextField);
-        accountStatus = findViewById(R.id.accountStatusTextView);
+        Query query = dbRef.child("services");
 
-        btnLookupAccount = findViewById(R.id.btn_lookupAccount);
-        btnDeleteAccount = findViewById(R.id.btn_deleteAccount);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        btnLookupAccount.setOnClickListener(l -> lookupAccount());
-        btnDeleteAccount.setOnClickListener(l -> deleteAccount());
+                clearServicesList();
 
-        accountStatus.setText("");
+                Service service;
+//                String id, name;
+//                double price;
+//                ArrayList<ServiceFormEntry> form;
+//                ArrayList<ServiceDocument> documents;
 
-        if (account.getRole().getRoleName()!= UserRole.RoleName.ADMIN) {
-            services.setVisibility(View.INVISIBLE);
-            accounts.setVisibility(View.INVISIBLE);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    service = snapshot.getValue(Service.class);
+                    servicesList.add(service);
+
+//                    id = snapshot.getKey();
+//                    name = snapshot.child("name").getValue(String.class);
+//                    price = snapshot.child("price").getValue(Double.class);
+//                    form = new ServiceForm(snapshot.child("form"));
+//
+//                    documents = new ArrayList<>();
+//
+//                    for (DataSnapshot doc : snapshot.child("docs").getChildren()) {
+//                        ServiceDocument serviceDoc = new ServiceDocument(doc.getKey().substring(4), doc.getValue(String.class));
+//                        documents.add(serviceDoc);
+//                    }
+//
+//                    service = new Service(name, displayName, price, form, documents);
+//                    servicesList.add(service);
+
+                }
+
+                recyclerAdapter = new RecyclerAdapter(getApplicationContext(), servicesList);
+                recyclerView.setAdapter(recyclerAdapter);
+                recyclerAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void clearServicesList() {
+
+        if (servicesList != null) {
+            servicesList.clear();
+
+            if (recyclerAdapter != null) {
+                recyclerAdapter.notifyDataSetChanged();
+            }
         }
 
     }
 
-    private void createService() {
-
-        String nameStr, displayNameStr, priceStr, requiredInfoStr, requiredDocsStr;
-
-        nameStr = name.getText().toString().trim();
-        displayNameStr = displayName.getText().toString().trim();
-        priceStr = price.getText().toString().trim();
-        requiredInfoStr = requiredInfo.getText().toString().trim();
-        requiredDocsStr = requiredDocs.getText().toString().trim();
-
-
-        // Validate fields
-        if (TextUtils.isEmpty(nameStr)) {
-            Toast.makeText(this, "Name cannot be blank", Toast.LENGTH_SHORT).show();
-        } else if (nameStr.contains(" ")) {
-            Toast.makeText(this, "Name cannot contain spaces. You may use spaces in the Full Name of the service instead.", Toast.LENGTH_LONG).show();
-        } else if (TextUtils.isEmpty(displayNameStr)) {
-            Toast.makeText(this, "Display name cannot be blank.", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(priceStr)) {
-            Toast.makeText(this, "Price cannot be blank.", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(requiredInfoStr)) {
-            Toast.makeText(this, "Required customer info cannot be blank.", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(requiredDocsStr)) {
-            Toast.makeText(this, "Required documents cannot be blank.", Toast.LENGTH_SHORT).show();
-        } else {
-            // Fields have passed initial validation
-
-            ServiceHelper serviceHelper = new ServiceHelper();
-
-            databaseManager.readChildrenData("services/", new FirebaseCallback() {
-                @Override
-                public void getData(HashMap<String, Object> data) {
-                    if ( !data.containsKey(nameStr) ) {
-                        // Service does not already exist
-                        // Create now
-                        String[] infoNames = requiredInfoStr.split(";");
-                        infoNames = Helper.trimArray(infoNames);
-
-                        for (int i=0; i < infoNames.length; i++) {
-                            infoNames[i] = threeDigitInt(i) + " " + infoNames[i];
-                        }
-
-                        ServiceForm form = new ServiceForm(infoNames);
-
-                        String[] docNames = requiredDocsStr.split(";");
-                        docNames = Helper.trimArray(docNames);
-
-                        for (int i=0; i < docNames.length; i++) {
-                            docNames[i] = threeDigitInt(i) + " " + docNames[i];
-                        }
-
-                        ServiceDocument[] docs = new ServiceDocument[docNames.length];
-                        for (int i=0; i < docs.length; i++) {
-                            ServiceDocument doc = new ServiceDocument(docNames[i], null);
-                            docs[i] = doc;
-                        }
-                        double priceNum = Double.parseDouble(priceStr);
-
-                        Service service = new Service(nameStr, displayNameStr, priceNum, form, docs);
-                        serviceHelper.createService(service);
-
-                        Toast.makeText(getApplicationContext(), "Service created successfully!", Toast.LENGTH_SHORT).show();
-
-
-                    } else {
-                        // Service with this name already exists
-                        Toast.makeText(getApplicationContext(), "Service already exists.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void getRef(HashMap<String, DataSnapshot> data) {
-
-                }
-            });
-
-
-        }
-
-
+    private void openServiceDialog() {
+        AdminServiceDialog serviceDialog = new AdminServiceDialog();
+        serviceDialog.show(getSupportFragmentManager(), "Service Dialog");
     }
+
+    /*
 
     private void lookupService() {
 
@@ -437,5 +389,7 @@ public class HomeActivity extends AppCompatActivity {
             });
         }
     }
+
+    */
 
 }

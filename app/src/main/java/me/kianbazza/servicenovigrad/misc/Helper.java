@@ -15,4 +15,14 @@ public class Helper {
 
     }
 
+    public static String threeDigitInt(int num) {
+        if (num < 10 && num >= 0) {
+            return "00" + num;
+        } else if (num < 100) {
+            return "0" + num;
+        } else {
+            return String.valueOf(num);
+        }
+    }
+
 }

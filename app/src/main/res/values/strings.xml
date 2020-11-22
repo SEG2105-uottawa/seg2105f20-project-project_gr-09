@@ -35,4 +35,6 @@
     <string name="hint_accountName">Account Name</string>
     <string name="action_lookupAccount">Lookup</string>
     <string name="action_deleteAccount">Delete Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

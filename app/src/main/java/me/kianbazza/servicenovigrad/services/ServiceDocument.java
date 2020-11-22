@@ -1,25 +1,24 @@
 package me.kianbazza.servicenovigrad.services;
 
-
-import java.net.URL;
-import java.util.Date;
-
 public class ServiceDocument {
 
     private String name;
-    private URL linkToDocument;
-    private Date uploadDate;
+    private String linkToUpload;
 
-    public ServiceDocument(String name, URL linkToDocument) {
+    public ServiceDocument() {
+
+    }
+
+    public ServiceDocument(String name, String linkToDocument) {
         this.name = name;
-        this.linkToDocument = linkToDocument;
+        this.linkToUpload = linkToDocument;
     }
 
     public String getName() {
         return name;
     }
 
-    public URL getLinkToDocument() {
-        return linkToDocument;
+    public String getLinkToUpload() {
+        return linkToUpload;
     }
 }

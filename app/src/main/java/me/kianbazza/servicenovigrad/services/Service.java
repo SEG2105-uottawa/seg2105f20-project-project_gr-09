@@ -1,19 +1,33 @@
 package me.kianbazza.servicenovigrad.services;
 
+import java.util.ArrayList;
+
 public class Service {
 
+    private String id;
     private String name;
-    private String displayName;
     private double price;
-    private ServiceForm requiredCustomerInfo;
-    private ServiceDocument[] requiredDocuments;
+    private ArrayList<ServiceFormEntry> form;
+    private ArrayList<ServiceDocument> requiredDocuments;
 
-    public Service(String name, String displayName, double price, ServiceForm requiredCustomerInfo, ServiceDocument[] requiredDocuments) {
+    public Service() {
+
+    }
+
+    public Service(String id, String name, double price, ArrayList<ServiceFormEntry> form, ArrayList<ServiceDocument> requiredDocuments) {
+        this.id = id;
         this.name = name;
-        this.displayName = displayName;
         this.price = price;
-        this.requiredCustomerInfo = requiredCustomerInfo;
+        this.form = form;
         this.requiredDocuments = requiredDocuments;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -24,14 +38,6 @@ public class Service {
         this.name = name;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -40,23 +46,19 @@ public class Service {
         this.price = price;
     }
 
-    public ServiceForm getRequiredCustomerInfo() {
-        return requiredCustomerInfo;
+    public ArrayList<ServiceFormEntry> getForm() {
+        return form;
     }
 
-    public void setRequiredCustomerInfo(ServiceForm requiredCustomerInfo) {
-        this.requiredCustomerInfo = requiredCustomerInfo;
+    public void setForm(ArrayList<ServiceFormEntry> form) {
+        this.form = form;
     }
 
-    public ServiceDocument[] getRequiredDocuments() {
+    public ArrayList<ServiceDocument> getRequiredDocuments() {
         return requiredDocuments;
     }
 
-    public void setRequiredDocuments(ServiceDocument[] requiredDocuments) {
+    public void setRequiredDocuments(ArrayList<ServiceDocument> requiredDocuments) {
         this.requiredDocuments = requiredDocuments;
     }
-
-
-
-
 }

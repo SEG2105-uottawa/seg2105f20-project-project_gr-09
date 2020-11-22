@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             Account account = new Account(usernameStr, emailStr, passwordStr, roleName);
 
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), AdminHomeActivity.class);
                             intent.putExtra("Account", account);
                             runOnUiThread(() -> {
                                 startActivity(intent);
