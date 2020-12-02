@@ -18,7 +18,7 @@
     <string name="action_logout">Logout</string>
     <string name="title_services">Manage Services</string>
     <string name="title_accounts">Manage Accounts</string>
-    <string name="action_addService">Add</string>
+    <string name="action_addService">Create New Service</string>
     <!-- Strings related to Add Service Fragment -->
     <string name="action_createService">Create</string>
     <string name="action_deleteService">Delete</string>
@@ -35,6 +35,17 @@
     <string name="hint_accountName">Account Name</string>
     <string name="action_lookupAccount">Lookup</string>
     <string name="action_deleteAccount">Delete Account</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Employee Branch Setup -->
+    <string name="hint_branchSetup_Address">Branch Address</string>
+    <string name="hint_branchSetup_PhoneNumber">Branch Phone Number (Digits Only)</string>
+    <string name="hint_branchSetup_OpeningTime">Pick Opening Time</string>
+    <string name="hint_branchSetup_ClosingTime">Pick Closing Time</string>
+
+    <string name="employee_title_manageBranchServices">Manage Branch Services</string>
+    <string name="employee_title_manageServiceRequests">Manage Service Requests</string>
+
+    <!-- Employee - Review Service Request Dialog -->
+    <string name="employee_reviewRequest_title_customerInfo">Customer Info</string>
+    <string name="employee_reviewRequest_title_providedDocuments">Provided Documents</string>
+
 </resources>

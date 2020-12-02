@@ -1,5 +1,8 @@
 package me.kianbazza.servicenovigrad.misc;
 
+import me.kianbazza.servicenovigrad.services.Service;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Helper {
@@ -15,6 +18,7 @@ public class Helper {
 
     }
 
+    @Deprecated
     public static String threeDigitInt(int num) {
         if (num < 10 && num >= 0) {
             return "00" + num;
@@ -24,5 +28,19 @@ public class Helper {
             return String.valueOf(num);
         }
     }
+
+    public static boolean contains(ArrayList<Service> serviceArrayList, Service service) {
+
+        for (Service s : serviceArrayList) {
+            if ( s.getServiceID().equals(service.getServiceID()) ) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+
 
 }

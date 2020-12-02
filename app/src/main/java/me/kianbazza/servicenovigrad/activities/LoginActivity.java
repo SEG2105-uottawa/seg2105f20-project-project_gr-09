@@ -8,14 +8,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.*;
 import me.kianbazza.servicenovigrad.R;
 import me.kianbazza.servicenovigrad.accounts.*;
-import me.kianbazza.servicenovigrad.database.DatabaseManager;
-import me.kianbazza.servicenovigrad.database.FirebaseCallback;
-import me.kianbazza.servicenovigrad.misc.AccountHelper;
-
-import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,49 +48,53 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
             // Login fields have been initially validated
-            
-            DatabaseManager databaseManager = new DatabaseManager();
-            databaseManager.readChildrenReference("users/", new FirebaseCallback() {
-                @Override
-                public void getData(HashMap<String, Object> data) {
-                    
-                }
 
+            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void getRef(HashMap<String, DataSnapshot> data) {
-                    
-                    if (data.containsKey(usernameStr)) {
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.child("users").child(usernameStr).exists()) {
                         // Account exists
-                        DataSnapshot userData = data.get(usernameStr);
-                        String correctPassword = userData.child("password").getValue(String.class);
+                        Account account = dataSnapshot.child("users").child(usernameStr).getValue(Account.class);
 
-                        if (passwordStr.equals(correctPassword)) {
+                        if (account.getPassword().equals(passwordStr)) {
                             // Password matches!
+                            Intent intent;
 
-                            String emailStr = userData.child("email").getValue(String.class);
-                            String roleStr = userData.child("role").getValue(String.class);
-                            UserRole.RoleName roleName = UserRole.RoleName.fromString(roleStr);
+                            switch (account.getRole()) {
+                                case EMPLOYEE:
+                                    intent = new Intent(getApplicationContext(), EmployeeHomeActivity.class);
+                                    Branch branch = dataSnapshot.child("branches").child(account.getBranchID()).getValue(Branch.class);
+                                    intent.putExtra("Branch", branch);
+                                    break;
+                                case ADMIN:
+                                    intent = new Intent(getApplicationContext(), AdminHomeActivity.class);
+                                    break;
+                                default:
+                                    intent = new Intent(getApplicationContext(), CustomerHomeActivity.class);
+                                    break;
+                            }
 
-                            AccountHelper accountHelper = new AccountHelper();
-
-                            Account account = new Account(usernameStr, emailStr, passwordStr, roleName);
-
-                            Intent intent = new Intent(getApplicationContext(), AdminHomeActivity.class);
                             intent.putExtra("Account", account);
                             runOnUiThread(() -> {
                                 startActivity(intent);
                             });
-
                         } else {
                             // Password is incorrect
-                            Toast.makeText(getApplicationContext(), "Incorrect password!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Incorrect password!", Toast.LENGTH_LONG).show();
                         }
                     } else {
                         // Account does not exist
                         Toast.makeText(LoginActivity.this, "Account does not exist. Register instead.", Toast.LENGTH_SHORT).show();
+
                     }
 
-                    
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
                 }
             });

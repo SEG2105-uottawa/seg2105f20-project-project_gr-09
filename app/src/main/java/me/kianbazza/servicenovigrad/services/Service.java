@@ -1,33 +1,83 @@
 package me.kianbazza.servicenovigrad.services;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
-public class Service {
+public class Service implements Parcelable {
 
-    private String id;
+    // Instance Variables
+    private String serviceID;
+
     private String name;
     private double price;
-    private ArrayList<ServiceFormEntry> form;
-    private ArrayList<ServiceDocument> requiredDocuments;
 
+    private ArrayList<String> requiredInfo;
+    private ArrayList<String> requiredDocuments;
+
+    // Empty Constructor
     public Service() {
 
     }
 
-    public Service(String id, String name, double price, ArrayList<ServiceFormEntry> form, ArrayList<ServiceDocument> requiredDocuments) {
-        this.id = id;
+    // Main Constructor
+    public Service(String serviceID, String name, double price, ArrayList<String> requiredInfo, ArrayList<String> requiredDocuments) {
+        this.serviceID = serviceID;
         this.name = name;
         this.price = price;
-        this.form = form;
+        this.requiredInfo = requiredInfo;
         this.requiredDocuments = requiredDocuments;
     }
 
-    public String getId() {
-        return id;
+    /**** Parcelable Methods ****/
+
+    protected Service(Parcel in) {
+        serviceID = in.readString();
+        name = in.readString();
+        price = in.readDouble();
+        requiredInfo = in.createStringArrayList();
+        requiredDocuments = in.createStringArrayList();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public static final Creator<Service> CREATOR = new Creator<Service>() {
+        @Override
+        public Service createFromParcel(Parcel in) {
+            return new Service(in);
+        }
+
+        @Override
+        public Service[] newArray(int size) {
+            return new Service[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(serviceID);
+        dest.writeString(name);
+        dest.writeDouble(price);
+        dest.writeStringList(requiredInfo);
+        dest.writeStringList(requiredDocuments);
+    }
+
+    /**** End of Parcelable Methods ****/
+
+    /**** Getters and Setters ****/
+
+    public String getServiceID() {
+        return serviceID;
+    }
+
+    public void setServiceID(String serviceID) {
+        this.serviceID = serviceID;
     }
 
     public String getName() {
@@ -46,19 +96,59 @@ public class Service {
         this.price = price;
     }
 
-    public ArrayList<ServiceFormEntry> getForm() {
-        return form;
+    public ArrayList<String> getRequiredInfo() {
+        return requiredInfo;
     }
 
-    public void setForm(ArrayList<ServiceFormEntry> form) {
-        this.form = form;
+    public void setRequiredInfo(ArrayList<String> requiredInfo) {
+        this.requiredInfo = requiredInfo;
     }
 
-    public ArrayList<ServiceDocument> getRequiredDocuments() {
+    public ArrayList<String> getRequiredDocuments() {
         return requiredDocuments;
     }
 
-    public void setRequiredDocuments(ArrayList<ServiceDocument> requiredDocuments) {
+    public void setRequiredDocuments(ArrayList<String> requiredDocuments) {
         this.requiredDocuments = requiredDocuments;
+    }
+
+    /**** End of Getters and Setters ****/
+
+    public String generateCustomerInfoWithSeparator() {
+
+        StringBuilder sb = new StringBuilder();
+
+        Iterator<String> itr = requiredInfo.iterator();
+
+        while (itr.hasNext()) {
+            String customerInfo = itr.next();
+            sb.append(customerInfo);
+
+            if (itr.hasNext()) {
+                sb.append("; ");
+            }
+        }
+
+        return sb.toString().trim();
+
+    }
+
+    public String generateDocumentNamesWithSeparator() {
+
+        StringBuilder sb = new StringBuilder();
+
+        Iterator<String> itr = requiredDocuments.iterator();
+
+        while (itr.hasNext()) {
+            String docName = itr.next();
+            sb.append(docName);
+
+            if (itr.hasNext()) {
+                sb.append("; ");
+            }
+        }
+
+        return sb.toString().trim();
+
     }
 }

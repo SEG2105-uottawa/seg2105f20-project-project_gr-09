@@ -3,17 +3,14 @@ package me.kianbazza.servicenovigrad.activities;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.*;
 import me.kianbazza.servicenovigrad.R;
-import me.kianbazza.servicenovigrad.database.DatabaseManager;
-import me.kianbazza.servicenovigrad.database.FirebaseCallback;
-import me.kianbazza.servicenovigrad.misc.AccountHelper;
 import me.kianbazza.servicenovigrad.misc.Vars;
 import me.kianbazza.servicenovigrad.accounts.*;
-
-import java.util.HashMap;
+import org.jetbrains.annotations.NotNull;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -52,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(usernameStr)) {
             Toast.makeText(this, "Username can't be blank.", Toast.LENGTH_SHORT).show();
 
-        } else if ( !(emailStr.trim().matches(Vars.emailPattern)) ) {
+        } else if ( !(emailStr.trim().matches(Vars.emailAddressRegex)) ) {
             Toast.makeText(this, "Email address is not valid.", Toast.LENGTH_SHORT).show();
 
         } else if (TextUtils.isEmpty(passwordStr)) {
@@ -60,26 +57,46 @@ public class RegisterActivity extends AppCompatActivity {
 
         } else {
 
-            AccountHelper accountHelper = new AccountHelper();
-            UserRole.RoleName roleName = UserRole.RoleName.fromString(roleStr);
+            Role role = Role.fromString(roleStr);
+            Account account = new Account(usernameStr, emailStr, passwordStr, role);
 
-            Account account = new Account(usernameStr, emailStr, passwordStr, roleName);
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
 
-            DatabaseManager databaseManager = new DatabaseManager();
-
-            databaseManager.readChildrenReference("users/", new FirebaseCallback() {
+            usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void getData(HashMap<String, Object> data) {
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
-                }
-
-                @Override
-                public void getRef(HashMap<String, DataSnapshot> data) {
-                    if ( !data.containsKey(account.getUsername()) ) {
+                    if (!snapshot.child(account.getUsername()).exists()) {
                         // Account does not exist
                         // Go ahead with account registration
-                        accountHelper.registerAccount(account);
-                        Intent intent = new Intent(RegisterActivity.this, AdminHomeActivity.class);
+                        snapshot.child(account.getUsername()).getRef().setValue(account);
+
+                        Intent intent;
+
+                        switch (account.getRole()) {
+                            case EMPLOYEE:
+                                intent = new Intent(getApplicationContext(), EmployeeHomeActivity.class);
+
+                                DatabaseReference branchesRef = FirebaseDatabase.getInstance().getReference().child("branches");
+                                DatabaseReference branchRef = branchesRef.push();
+
+                                Branch branch = new Branch(false, branchRef.getKey(), "", "", "", "");
+                                branchRef.setValue(branch);
+
+                                account.setBranch(branchRef.getKey());
+                                snapshot.child(account.getUsername()).getRef().child("branchID").setValue(account.getBranchID());
+
+                                intent.putExtra("Branch", branch);
+
+                                break;
+                            case ADMIN:
+                                intent = new Intent(getApplicationContext(), AdminHomeActivity.class);
+                                break;
+                            default:
+                                intent = new Intent(getApplicationContext(), CustomerHomeActivity.class);
+                                break;
+                        }
+
                         intent.putExtra("Account", account);
                         runOnUiThread(() -> startActivity(intent));
 
@@ -87,6 +104,12 @@ public class RegisterActivity extends AppCompatActivity {
                         // Account with this username already exists
                         Toast.makeText(RegisterActivity.this, "An account with this username already exists.", Toast.LENGTH_SHORT).show();
                     }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
                 }
             });
 

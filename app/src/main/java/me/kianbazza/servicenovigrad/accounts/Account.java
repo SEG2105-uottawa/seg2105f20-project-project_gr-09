@@ -8,28 +8,21 @@ public class Account implements Parcelable {
     private String username;
     private String email;
     private String password;
-    private UserRole role;
+    private Role role;
 
-    public Account(String username, String email, String password, UserRole.RoleName roleName) {
+    private String branchID;
+
+    // Empty constructor
+    public Account() {
+
+    }
+
+    public Account(String username, String email, String password, Role role) {
 
         this.username = username;
         this.email = email;
         this.password = password;
-
-        switch (roleName) {
-            case CUSTOMER:
-                this.role = new CustomerRole();
-                break;
-            case EMPLOYEE:
-                this.role = new EmployeeRole();
-                break;
-            case ADMIN:
-                this.role = new AdminRole();
-                break;
-            default:
-                this.role = null;
-                break;
-        }
+        this.role = role;
 
     }
 
@@ -45,9 +38,18 @@ public class Account implements Parcelable {
         return password;
     }
 
-    public UserRole getRole() {
+    public Role getRole() {
         return role;
     }
+
+    public void setBranch(String branchID) {
+        this.branchID = branchID;
+    }
+
+    public String getBranchID() {
+        return branchID;
+    }
+
 
     /**
      * PARCELABLE REQUIRED METHODS
@@ -57,7 +59,8 @@ public class Account implements Parcelable {
         username = in.readString();
         email = in.readString();
         password = in.readString();
-        role = in.readParcelable(UserRole.class.getClassLoader());
+        role = Role.fromString(in.readString());
+        branchID = in.readString();
     }
 
     public static final Creator<Account> CREATOR = new Creator<Account>() {
@@ -83,6 +86,7 @@ public class Account implements Parcelable {
         dest.writeString(username);
         dest.writeString(email);
         dest.writeString(password);
-        dest.writeParcelable(role, 0);
+        dest.writeString(role.toString());
+        dest.writeString(branchID);
     }
 }

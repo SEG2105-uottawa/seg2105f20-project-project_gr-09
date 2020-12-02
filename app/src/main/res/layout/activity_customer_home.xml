@@ -5,6 +5,61 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.CustomerHomeActivity">
+        tools:context=".activities.CustomerHomeActivity" android:layout_margin="8dp">
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/logged_in"
+                    android:layout_width="293dp"
+                    android:layout_height="match_parent" android:id="@+id/customer_loggedInTextVIew" android:textSize="24sp"
+                    android:textStyle="bold" android:layout_gravity="left" android:gravity="center_vertical"
+                    android:layout_weight="1"/>
+            <Button
+                    android:text="@string/action_logout"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content" android:id="@+id/btn_customer_logout" android:layout_gravity="right"
+                    android:layout_weight="1"/>
+        </LinearLayout>
+        <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/usernameKey"
+                    android:layout_width="194dp"
+                    android:layout_height="wrap_content" android:id="@+id/customer_usernameTextView" android:layout_weight="1"
+                    android:textSize="18sp" android:textStyle="bold"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/customer_viewUsernameTextView"
+                    android:textSize="18sp"
+                    android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/roleKey"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content" android:id="@+id/customer_roleTextView" android:layout_weight="1"
+                    android:textSize="18sp" android:textStyle="bold"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/customer_viewRoleTextView" android:textSize="18sp"
+                    android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
