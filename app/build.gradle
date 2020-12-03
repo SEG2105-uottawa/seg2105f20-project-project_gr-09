@@ -54,5 +54,9 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
 
+    // implementation 'com.github.chathuralakmal:AndroidImagePopup:1.2.2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+
 
 }

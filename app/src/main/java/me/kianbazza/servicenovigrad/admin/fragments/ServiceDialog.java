@@ -113,8 +113,8 @@ public class ServiceDialog extends AppCompatDialogFragment {
 
             double price = Double.parseDouble(priceStr);
 
-            ArrayList<String> requiredInfo = new ArrayList<>(Arrays.asList(Helper.trimArray(requiredInfoStr.split(";"))));
-            ArrayList<String> requiredDocs = new ArrayList<>(Arrays.asList(Helper.trimArray( requiredDocsStr.split(";") )));
+            ArrayList<String> requiredInfo = new ArrayList<>(Arrays.asList(Helper.get().trimArray(requiredInfoStr.split(";"))));
+            ArrayList<String> requiredDocs = new ArrayList<>(Arrays.asList(Helper.get().trimArray( requiredDocsStr.split(";") )));
 
             // Create new service entry in DB with unique ID
             DatabaseReference serviceRef = servicesRef.push();
@@ -157,8 +157,8 @@ public class ServiceDialog extends AppCompatDialogFragment {
             // Fields have passed initial validation
             double price = Double.parseDouble(priceStr);
 
-            ArrayList<String> requiredInfo = new ArrayList<>(Arrays.asList(Helper.trimArray(requiredInfoStr.split(";"))));
-            ArrayList<String> requiredDocs = new ArrayList<>(Arrays.asList(Helper.trimArray(requiredDocsStr.split(";"))));
+            ArrayList<String> requiredInfo = new ArrayList<>(Arrays.asList(Helper.get().trimArray(requiredInfoStr.split(";"))));
+            ArrayList<String> requiredDocs = new ArrayList<>(Arrays.asList(Helper.get().trimArray(requiredDocsStr.split(";"))));
 
             service.setName(nameStr);
             service.setPrice(price);

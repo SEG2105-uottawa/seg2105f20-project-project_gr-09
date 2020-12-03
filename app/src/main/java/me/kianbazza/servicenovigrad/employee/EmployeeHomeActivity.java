@@ -234,7 +234,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
 
         Service service = servicesList.get(position);
 
-        if (Helper.contains(branchServicesList, service)) {
+        if (Helper.get().contains(branchServicesList, service)) {
             // This service is already a branch service.
             // Remove it from the branch's services.
             removeBranchService(service);
@@ -267,7 +267,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ServiceRequest serviceRequest = snapshot.getValue(ServiceRequest.class);
 
-                    if (Helper.contains(branchServicesList, serviceRequest.getService())) {
+                    if (Helper.get().contains(branchServicesList, serviceRequest.getService())) {
                         branchServiceRequestsList.add(serviceRequest);
                     }
 

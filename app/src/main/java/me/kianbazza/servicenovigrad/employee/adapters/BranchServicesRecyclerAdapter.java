@@ -43,7 +43,7 @@ public class BranchServicesRecyclerAdapter extends RecyclerView.Adapter<BranchSe
         holder.serviceNameView.setText(servicesList.get(position).getName());
         holder.servicePriceView.setText(Double.toString(servicesList.get(position).getPrice()));
 
-        if (Helper.contains(branchServicesList, servicesList.get(position))) {
+        if (Helper.get().contains(branchServicesList, servicesList.get(position))) {
             holder.relativeLayout.setBackgroundColor(Color.parseColor("#b3ffb3"));
 
         }

@@ -60,13 +60,15 @@ public class ProvidedDocumentsRecyclerAdapter extends RecyclerView.Adapter<Provi
         TextView docKeyView, docValueView;
         OnProvidedDocListener onProvidedDocListener;
 
-        public ViewHolder(@NonNull View itemView, OnProvidedDocListener onProvidedDocListener) {
+        public ViewHolder(View itemView, OnProvidedDocListener onProvidedDocListener) {
             super(itemView);
 
             docKeyView = itemView.findViewById(R.id.reviewServiceRequest_providedDocs_keyTextView);
             docValueView = itemView.findViewById(R.id.reviewServiceRequest_providedDocs_valueTextView);
 
             this.onProvidedDocListener = onProvidedDocListener;
+
+            itemView.setOnClickListener(this);
 
         }
 
