@@ -1,4 +1,4 @@
-package me.kianbazza.servicenovigrad.activities;
+package me.kianbazza.servicenovigrad.employee.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

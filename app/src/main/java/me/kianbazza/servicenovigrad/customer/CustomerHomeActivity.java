@@ -1,4 +1,4 @@
-package me.kianbazza.servicenovigrad.activities;
+package me.kianbazza.servicenovigrad.customer;
 
 import android.content.Intent;
 import android.widget.Button;
@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import me.kianbazza.servicenovigrad.R;
 import me.kianbazza.servicenovigrad.accounts.Account;
+import me.kianbazza.servicenovigrad.general.LoginActivity;
 import me.kianbazza.servicenovigrad.services.Service;
 
 public class CustomerHomeActivity extends AppCompatActivity {

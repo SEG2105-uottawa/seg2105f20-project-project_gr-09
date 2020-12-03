@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="1000dp"
-        tools:context=".activities.AdminHomeActivity">
+        tools:context=".admin.AdminHomeActivity">
   <LinearLayout
           android:orientation="vertical"
           android:layout_width="match_parent"

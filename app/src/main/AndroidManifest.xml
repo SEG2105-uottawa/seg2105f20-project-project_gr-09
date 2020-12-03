@@ -9,12 +9,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".activities.CustomerHomeActivity">
+        <activity android:name=".customer.CustomerHomeActivity">
         </activity>
-        <activity android:name=".activities.EmployeeHomeActivity">
+        <activity android:name=".employee.EmployeeHomeActivity">
         </activity>
         <activity
-                android:name=".activities.LoginActivity"
+                android:name=".general.LoginActivity"
                 android:label="LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".activities.RegisterActivity"
+                android:name=".general.RegisterActivity"
                 android:label="RegisterActivity">
         </activity>
         <activity
-                android:name=".activities.AdminHomeActivity"
+                android:name=".admin.AdminHomeActivity"
                 android:label="HomeActivity">
         </activity>
     </application>

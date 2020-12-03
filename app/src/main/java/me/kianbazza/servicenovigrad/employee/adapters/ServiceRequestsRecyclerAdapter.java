@@ -1,4 +1,4 @@
-package me.kianbazza.servicenovigrad.adapters;
+package me.kianbazza.servicenovigrad.employee.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,14 +11,14 @@ import me.kianbazza.servicenovigrad.services.ServiceRequest;
 
 import java.util.ArrayList;
 
-public class EmployeeServiceRequestsRecyclerAdapter extends RecyclerView.Adapter<EmployeeServiceRequestsRecyclerAdapter.ViewHolder> {
+public class ServiceRequestsRecyclerAdapter extends RecyclerView.Adapter<ServiceRequestsRecyclerAdapter.ViewHolder> {
 
     private static final String tag = "RecyclerView";
     private Context context;
     private ArrayList<ServiceRequest> branchServiceRequestsList;
     private OnServiceRequestListener onServiceRequestListener;
 
-    public EmployeeServiceRequestsRecyclerAdapter(Context context, ArrayList<ServiceRequest> branchServiceRequestsList, OnServiceRequestListener onServiceRequestListener) {
+    public ServiceRequestsRecyclerAdapter(Context context, ArrayList<ServiceRequest> branchServiceRequestsList, OnServiceRequestListener onServiceRequestListener) {
         this.context = context;
         this.branchServiceRequestsList = branchServiceRequestsList;
         this.onServiceRequestListener = onServiceRequestListener;
@@ -34,7 +34,7 @@ public class EmployeeServiceRequestsRecyclerAdapter extends RecyclerView.Adapter
     }
 
     @Override
-    public void onBindViewHolder(EmployeeServiceRequestsRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ServiceRequestsRecyclerAdapter.ViewHolder holder, int position) {
 
         ServiceRequest serviceRequest = branchServiceRequestsList.get(position);
 

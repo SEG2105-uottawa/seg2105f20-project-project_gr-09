@@ -1,10 +1,8 @@
-package me.kianbazza.servicenovigrad.activities;
+package me.kianbazza.servicenovigrad.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,16 +15,16 @@ import com.google.firebase.database.*;
 import me.kianbazza.servicenovigrad.R;
 import me.kianbazza.servicenovigrad.accounts.Account;
 import me.kianbazza.servicenovigrad.accounts.Role;
-import me.kianbazza.servicenovigrad.adapters.AdminServicesRecyclerAdapter;
+import me.kianbazza.servicenovigrad.admin.fragments.ServiceDialog;
+import me.kianbazza.servicenovigrad.general.LoginActivity;
+import me.kianbazza.servicenovigrad.admin.adapters.ServicesRecyclerAdapter;
 import me.kianbazza.servicenovigrad.services.Service;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class AdminHomeActivity extends AppCompatActivity implements AdminServicesRecyclerAdapter.OnServiceListener {
+public class AdminHomeActivity extends AppCompatActivity implements ServicesRecyclerAdapter.OnServiceListener {
 
-    private static final String TAG = "AdminHomeActivity";
     // Activity variables
     private Account account;
     private Service service;
@@ -41,7 +39,7 @@ public class AdminHomeActivity extends AppCompatActivity implements AdminService
 
     // Variables - Services
     private ArrayList<Service> servicesList;
-    private AdminServicesRecyclerAdapter adminServicesRecyclerAdapter;
+    private ServicesRecyclerAdapter servicesRecyclerAdapter;
 
     // Interface - Accounts
     private RecyclerView adminAccountsRecyclerView;
@@ -112,9 +110,9 @@ public class AdminHomeActivity extends AppCompatActivity implements AdminService
 
                 }
 
-                adminServicesRecyclerAdapter = new AdminServicesRecyclerAdapter(getApplicationContext(), servicesList, AdminHomeActivity.this);
-                adminServicesRecyclerView.setAdapter(adminServicesRecyclerAdapter);
-                adminServicesRecyclerAdapter.notifyDataSetChanged();
+                servicesRecyclerAdapter = new ServicesRecyclerAdapter(getApplicationContext(), servicesList, AdminHomeActivity.this);
+                adminServicesRecyclerView.setAdapter(servicesRecyclerAdapter);
+                servicesRecyclerAdapter.notifyDataSetChanged();
 
             }
 
@@ -131,8 +129,8 @@ public class AdminHomeActivity extends AppCompatActivity implements AdminService
         if (servicesList != null) {
             servicesList.clear();
 
-            if (adminServicesRecyclerAdapter != null) {
-                adminServicesRecyclerAdapter.notifyDataSetChanged();
+            if (servicesRecyclerAdapter != null) {
+                servicesRecyclerAdapter.notifyDataSetChanged();
             }
         }
 
@@ -144,7 +142,7 @@ public class AdminHomeActivity extends AppCompatActivity implements AdminService
         bundle.putParcelable("Service", service);
         bundle.putBoolean("isEditingService", false);
 
-        AdminServiceDialog serviceDialog = new AdminServiceDialog();
+        ServiceDialog serviceDialog = new ServiceDialog();
         serviceDialog.setArguments(bundle);
         serviceDialog.show(getSupportFragmentManager(), "Service Dialog");
     }
@@ -158,7 +156,7 @@ public class AdminHomeActivity extends AppCompatActivity implements AdminService
         bundle.putParcelable("Service", service);
         bundle.putBoolean("isEditingService", true);
 
-        AdminServiceDialog serviceDialog = new AdminServiceDialog();
+        ServiceDialog serviceDialog = new ServiceDialog();
         serviceDialog.setArguments(bundle);
         serviceDialog.show(getSupportFragmentManager(), "Service Dialog");
 

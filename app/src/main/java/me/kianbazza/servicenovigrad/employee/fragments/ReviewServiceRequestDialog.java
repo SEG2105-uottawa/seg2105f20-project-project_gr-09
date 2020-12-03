@@ -1,4 +1,4 @@
-package me.kianbazza.servicenovigrad.activities;
+package me.kianbazza.servicenovigrad.employee.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -33,18 +33,36 @@ public class ReviewServiceRequestDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setView(view)
-                .setTitle("Review Service Request")
+                .setTitle("Reviewing Service Request")
                 .setNegativeButton("Deny", (dialog, which) -> {
+
+                    denyServiceRequest();
 
                 })
                 .setPositiveButton("Approve", ((dialog, which) -> {
 
+                    approveServiceRequest();
+
                 }))
                 .setNeutralButton("Cancel", ((dialog, which) -> {
 
+
                 }));
 
+        customerInfoRecyclerView = view.findViewById(R.id.reviewServiceRequest_customerInfoRecyclerView);
+
+
+        providedDocumentsRecyclerView = view.findViewById(R.id.reviewServiceRequest_documentsRecyclerView);
+
         return builder.create();
+
+    }
+
+    private void approveServiceRequest() {
+
+    }
+
+    private void denyServiceRequest() {
 
     }
 }

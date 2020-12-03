@@ -1,4 +1,4 @@
-package me.kianbazza.servicenovigrad.activities;
+package me.kianbazza.servicenovigrad.admin.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AdminServiceDialog extends AppCompatDialogFragment {
+public class ServiceDialog extends AppCompatDialogFragment {
 
     // Interface
     EditText name, price, requiredInfo, requiredDocs;

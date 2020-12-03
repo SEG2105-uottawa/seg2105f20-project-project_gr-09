@@ -1,4 +1,4 @@
-package me.kianbazza.servicenovigrad.activities;
+package me.kianbazza.servicenovigrad.general;
 
 import android.content.Intent;
 import android.text.TextUtils;
@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.google.firebase.database.*;
 import me.kianbazza.servicenovigrad.R;
+import me.kianbazza.servicenovigrad.admin.AdminHomeActivity;
+import me.kianbazza.servicenovigrad.customer.CustomerHomeActivity;
+import me.kianbazza.servicenovigrad.employee.EmployeeHomeActivity;
 import me.kianbazza.servicenovigrad.misc.Vars;
 import me.kianbazza.servicenovigrad.accounts.*;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package me.kianbazza.servicenovigrad.adapters;
+package me.kianbazza.servicenovigrad.employee.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,14 +14,14 @@ import me.kianbazza.servicenovigrad.services.Service;
 
 import java.util.ArrayList;
 
-public class EmployeeServicesRecyclerAdapter extends RecyclerView.Adapter<EmployeeServicesRecyclerAdapter.ViewHolder> {
+public class BranchServicesRecyclerAdapter extends RecyclerView.Adapter<BranchServicesRecyclerAdapter.ViewHolder> {
 
     private static final String tag = "RecyclerView";
     private Context context;
     private ArrayList<Service> servicesList, branchServicesList;
-    private EmployeeServicesRecyclerAdapter.OnServiceListener onServiceListener;
+    private BranchServicesRecyclerAdapter.OnServiceListener onServiceListener;
 
-    public EmployeeServicesRecyclerAdapter(Context context, ArrayList<Service> servicesList, ArrayList<Service> branchServicesList, OnServiceListener onServiceListener) {
+    public BranchServicesRecyclerAdapter(Context context, ArrayList<Service> servicesList, ArrayList<Service> branchServicesList, OnServiceListener onServiceListener) {
         this.context = context;
         this.servicesList = servicesList;
         this.branchServicesList = branchServicesList;
@@ -38,7 +38,7 @@ public class EmployeeServicesRecyclerAdapter extends RecyclerView.Adapter<Employ
     }
 
     @Override
-    public void onBindViewHolder(EmployeeServicesRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(BranchServicesRecyclerAdapter.ViewHolder holder, int position) {
 
         holder.serviceNameView.setText(servicesList.get(position).getName());
         holder.servicePriceView.setText(Double.toString(servicesList.get(position).getPrice()));

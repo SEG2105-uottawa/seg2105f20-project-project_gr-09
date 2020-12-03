@@ -1,11 +1,9 @@
-package me.kianbazza.servicenovigrad.adapters;
+package me.kianbazza.servicenovigrad.admin.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import me.kianbazza.servicenovigrad.R;
@@ -13,14 +11,14 @@ import me.kianbazza.servicenovigrad.services.Service;
 
 import java.util.ArrayList;
 
-public class AdminServicesRecyclerAdapter extends RecyclerView.Adapter<AdminServicesRecyclerAdapter.ViewHolder> {
+public class ServicesRecyclerAdapter extends RecyclerView.Adapter<ServicesRecyclerAdapter.ViewHolder> {
 
     private static final String tag = "RecyclerView";
     private Context context;
     private ArrayList<Service> servicesList;
     private OnServiceListener onServiceListener;
 
-    public AdminServicesRecyclerAdapter(Context context, ArrayList<Service> servicesList, OnServiceListener onServiceListener) {
+    public ServicesRecyclerAdapter(Context context, ArrayList<Service> servicesList, OnServiceListener onServiceListener) {
         this.context = context;
         this.servicesList = servicesList;
         this.onServiceListener = onServiceListener;
@@ -38,7 +36,7 @@ public class AdminServicesRecyclerAdapter extends RecyclerView.Adapter<AdminServ
     }
 
     @Override
-    public void onBindViewHolder(AdminServicesRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ServicesRecyclerAdapter.ViewHolder holder, int position) {
 
         holder.serviceNameView.setText(servicesList.get(position).getName());
         holder.servicePriceView.setText(Double.toString(servicesList.get(position).getPrice()));

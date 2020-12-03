@@ -1,4 +1,4 @@
-package me.kianbazza.servicenovigrad.activities;
+package me.kianbazza.servicenovigrad.employee;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,11 @@ import com.google.firebase.database.*;
 import me.kianbazza.servicenovigrad.R;
 import me.kianbazza.servicenovigrad.accounts.Account;
 import me.kianbazza.servicenovigrad.accounts.Branch;
-import me.kianbazza.servicenovigrad.adapters.EmployeeServiceRequestsRecyclerAdapter;
-import me.kianbazza.servicenovigrad.adapters.EmployeeServicesRecyclerAdapter;
+import me.kianbazza.servicenovigrad.employee.fragments.BranchSetupDialog;
+import me.kianbazza.servicenovigrad.employee.fragments.ReviewServiceRequestDialog;
+import me.kianbazza.servicenovigrad.general.LoginActivity;
+import me.kianbazza.servicenovigrad.employee.adapters.ServiceRequestsRecyclerAdapter;
+import me.kianbazza.servicenovigrad.employee.adapters.BranchServicesRecyclerAdapter;
 import me.kianbazza.servicenovigrad.misc.FragmentToActivity;
 import me.kianbazza.servicenovigrad.misc.Helper;
 import me.kianbazza.servicenovigrad.services.Service;
@@ -25,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class EmployeeHomeActivity extends AppCompatActivity implements FragmentToActivity, EmployeeServicesRecyclerAdapter.OnServiceListener, EmployeeServiceRequestsRecyclerAdapter.OnServiceRequestListener {
+public class EmployeeHomeActivity extends AppCompatActivity implements FragmentToActivity, BranchServicesRecyclerAdapter.OnServiceListener, ServiceRequestsRecyclerAdapter.OnServiceRequestListener {
 
     // Activity variables
     private Account account;
@@ -46,14 +49,14 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
 
     // Variables - Services
     private ArrayList<Service> servicesList, branchServicesList;
-    private EmployeeServicesRecyclerAdapter employeeServicesRecyclerAdapter;
+    private BranchServicesRecyclerAdapter branchServicesRecyclerAdapter;
 
     // Interface - Service Requests
     private RecyclerView employeeServiceRequestsRecyclerView;
 
     // Variables - Service Requests
     private ArrayList<ServiceRequest> branchServiceRequestsList;
-    private EmployeeServiceRequestsRecyclerAdapter employeeServiceRequestsRecyclerAdapter;
+    private ServiceRequestsRecyclerAdapter serviceRequestsRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,9 +139,9 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
 
                 }
 
-                employeeServicesRecyclerAdapter = new EmployeeServicesRecyclerAdapter(getApplicationContext(), servicesList, branchServicesList, EmployeeHomeActivity.this);
-                employeeServicesRecyclerView.setAdapter(employeeServicesRecyclerAdapter);
-                employeeServicesRecyclerAdapter.notifyDataSetChanged();
+                branchServicesRecyclerAdapter = new BranchServicesRecyclerAdapter(getApplicationContext(), servicesList, branchServicesList, EmployeeHomeActivity.this);
+                employeeServicesRecyclerView.setAdapter(branchServicesRecyclerAdapter);
+                branchServicesRecyclerAdapter.notifyDataSetChanged();
 
 
             }
@@ -170,9 +173,9 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
 
                 }
 
-                employeeServicesRecyclerAdapter = new EmployeeServicesRecyclerAdapter(getApplicationContext(), servicesList, branchServicesList, EmployeeHomeActivity.this);
-                employeeServicesRecyclerView.setAdapter(employeeServicesRecyclerAdapter);
-                employeeServicesRecyclerAdapter.notifyDataSetChanged();
+                branchServicesRecyclerAdapter = new BranchServicesRecyclerAdapter(getApplicationContext(), servicesList, branchServicesList, EmployeeHomeActivity.this);
+                employeeServicesRecyclerView.setAdapter(branchServicesRecyclerAdapter);
+                branchServicesRecyclerAdapter.notifyDataSetChanged();
 
                 // createDummyServiceRequest();
 
@@ -193,8 +196,8 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
         if (servicesList != null) {
             servicesList.clear();
 
-            if (employeeServicesRecyclerAdapter != null) {
-                employeeServicesRecyclerAdapter.notifyDataSetChanged();
+            if (branchServicesRecyclerAdapter != null) {
+                branchServicesRecyclerAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -204,8 +207,8 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
         if (branchServicesList != null) {
             branchServicesList.clear();
 
-            if (employeeServicesRecyclerAdapter != null) {
-                employeeServicesRecyclerAdapter.notifyDataSetChanged();
+            if (branchServicesRecyclerAdapter != null) {
+                branchServicesRecyclerAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -278,9 +281,9 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
             }
         });
 
-        employeeServiceRequestsRecyclerAdapter = new EmployeeServiceRequestsRecyclerAdapter(getApplicationContext(), branchServiceRequestsList, EmployeeHomeActivity.this);
-        employeeServiceRequestsRecyclerView.setAdapter(employeeServiceRequestsRecyclerAdapter);
-        employeeServiceRequestsRecyclerAdapter.notifyDataSetChanged();
+        serviceRequestsRecyclerAdapter = new ServiceRequestsRecyclerAdapter(getApplicationContext(), branchServiceRequestsList, EmployeeHomeActivity.this);
+        employeeServiceRequestsRecyclerView.setAdapter(serviceRequestsRecyclerAdapter);
+        serviceRequestsRecyclerAdapter.notifyDataSetChanged();
 
 
 
@@ -291,8 +294,8 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
         if (branchServiceRequestsList != null) {
             branchServiceRequestsList.clear();
 
-            if (employeeServiceRequestsRecyclerAdapter != null) {
-                employeeServiceRequestsRecyclerAdapter.notifyDataSetChanged();
+            if (serviceRequestsRecyclerAdapter != null) {
+                serviceRequestsRecyclerAdapter.notifyDataSetChanged();
             }
         }
 
