@@ -43,11 +43,18 @@ public class Account implements Parcelable {
     }
 
     public void setBranch(String branchID) {
-        this.branchID = branchID;
+        if (role==Role.EMPLOYEE) {
+            this.branchID = branchID;
+        }
     }
 
     public String getBranchID() {
-        return branchID;
+        if (role==Role.EMPLOYEE) {
+            return branchID;
+        } else {
+            return null;
+        }
+
     }
 
 
