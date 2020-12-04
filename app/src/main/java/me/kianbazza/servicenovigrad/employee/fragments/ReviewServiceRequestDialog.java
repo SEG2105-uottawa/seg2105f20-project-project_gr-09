@@ -1,28 +1,17 @@
 package me.kianbazza.servicenovigrad.employee.fragments;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 import me.kianbazza.servicenovigrad.R;
 import me.kianbazza.servicenovigrad.employee.adapters.CustomerInfoRecyclerAdapter;
 import me.kianbazza.servicenovigrad.employee.adapters.ProvidedDocumentsRecyclerAdapter;
@@ -94,9 +83,9 @@ public class ReviewServiceRequestDialog extends AppCompatDialogFragment implemen
 
         builder.setView(view)
                 .setTitle("Reviewing Service Request")
-                .setNegativeButton("Deny", (dialog, which) -> {
+                .setNegativeButton("Reject", (dialog, which) -> {
 
-                    denyServiceRequest();
+                    rejectServiceRequest();
 
                 })
                 .setPositiveButton("Approve", ((dialog, which) -> {
@@ -117,7 +106,7 @@ public class ReviewServiceRequestDialog extends AppCompatDialogFragment implemen
 
     }
 
-    private void denyServiceRequest() {
+    private void rejectServiceRequest() {
 
     }
 
