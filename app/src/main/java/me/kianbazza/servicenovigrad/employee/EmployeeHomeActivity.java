@@ -174,7 +174,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
                 employeeServicesRecyclerView.setAdapter(branchServicesRecyclerAdapter);
                 branchServicesRecyclerAdapter.notifyDataSetChanged();
 
-                // createDummyServiceRequest();
+                createDummyServiceRequest();
 
             }
 

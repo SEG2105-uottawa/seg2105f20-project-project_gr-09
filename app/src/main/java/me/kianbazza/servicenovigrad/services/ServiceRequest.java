@@ -15,7 +15,7 @@ public class ServiceRequest implements Parcelable {
     private Account customer;
 
     private ArrayList<ServiceFormEntry<String, String>> customerInfo;
-    private ArrayList<ServiceDocument> requiredDocuments;
+    private ArrayList<ServiceDocument> providedDocuments;
 
     private Service service;
 
@@ -25,12 +25,12 @@ public class ServiceRequest implements Parcelable {
     }
 
     // Main Constructor
-    public ServiceRequest(String requestID, ServiceRequestStatus requestStatus, Account customer, ArrayList<ServiceFormEntry<String, String>> customerInfo, ArrayList<ServiceDocument> requiredDocuments, Service service) {
+    public ServiceRequest(String requestID, ServiceRequestStatus requestStatus, Account customer, ArrayList<ServiceFormEntry<String, String>> customerInfo, ArrayList<ServiceDocument> providedDocuments, Service service) {
         this.requestID = requestID;
         this.requestStatus = requestStatus;
         this.customer = customer;
         this.customerInfo = customerInfo;
-        this.requiredDocuments = requiredDocuments;
+        this.providedDocuments = providedDocuments;
         this.service = service;
     }
 
@@ -41,7 +41,7 @@ public class ServiceRequest implements Parcelable {
         requestStatus = ServiceRequestStatus.fromString(in.readString());
         customer = in.readParcelable(Account.class.getClassLoader());
         customerInfo = new ArrayList<>(Arrays.asList((ServiceFormEntry<String, String>[]) in.readParcelableArray(ServiceFormEntry.class.getClassLoader())));
-        requiredDocuments = new ArrayList<>(Arrays.asList((ServiceDocument[]) in.readParcelableArray(ServiceDocument.class.getClassLoader())));
+        providedDocuments = new ArrayList<>(Arrays.asList((ServiceDocument[]) in.readParcelableArray(ServiceDocument.class.getClassLoader())));
         service = in.readParcelable(Service.class.getClassLoader());
     }
 
@@ -68,7 +68,7 @@ public class ServiceRequest implements Parcelable {
         dest.writeString(requestStatus.name());
         dest.writeParcelable(customer, flags);
         dest.writeParcelableArray(customerInfo.toArray(new ServiceFormEntry[0]), flags);
-        dest.writeParcelableArray(requiredDocuments.toArray(new ServiceDocument[0]), flags);
+        dest.writeParcelableArray(providedDocuments.toArray(new ServiceDocument[0]), flags);
         dest.writeParcelable(service, flags);
     }
 
@@ -108,12 +108,12 @@ public class ServiceRequest implements Parcelable {
         this.customerInfo = customerInfo;
     }
 
-    public ArrayList<ServiceDocument> getRequiredDocuments() {
-        return requiredDocuments;
+    public ArrayList<ServiceDocument> getProvidedDocuments() {
+        return providedDocuments;
     }
 
-    public void setRequiredDocuments(ArrayList<ServiceDocument> requiredDocuments) {
-        this.requiredDocuments = requiredDocuments;
+    public void setProvidedDocuments(ArrayList<ServiceDocument> providedDocuments) {
+        this.providedDocuments = providedDocuments;
     }
 
     public Service getService() {

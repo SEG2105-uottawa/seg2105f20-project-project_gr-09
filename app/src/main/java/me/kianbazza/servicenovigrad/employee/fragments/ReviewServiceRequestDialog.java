@@ -66,7 +66,7 @@ public class ReviewServiceRequestDialog extends AppCompatDialogFragment implemen
 
 
         // Provided Documents
-        providedDocumentsList = serviceRequest.getRequiredDocuments();
+        providedDocumentsList = serviceRequest.getProvidedDocuments();
 
         providedDocumentsRecyclerView = view.findViewById(R.id.reviewServiceRequest_documentsRecyclerView);
         providedDocumentsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
