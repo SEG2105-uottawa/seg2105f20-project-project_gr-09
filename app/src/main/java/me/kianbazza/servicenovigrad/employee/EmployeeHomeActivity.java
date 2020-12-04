@@ -20,10 +20,7 @@ import me.kianbazza.servicenovigrad.employee.adapters.ServiceRequestsRecyclerAda
 import me.kianbazza.servicenovigrad.employee.adapters.BranchServicesRecyclerAdapter;
 import me.kianbazza.servicenovigrad.misc.FragmentToActivity;
 import me.kianbazza.servicenovigrad.misc.Helper;
-import me.kianbazza.servicenovigrad.services.Service;
-import me.kianbazza.servicenovigrad.services.ServiceDocument;
-import me.kianbazza.servicenovigrad.services.ServiceFormEntry;
-import me.kianbazza.servicenovigrad.services.ServiceRequest;
+import me.kianbazza.servicenovigrad.services.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -347,7 +344,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
             aDocs.add(new ServiceDocument("Proof of Residence", "https://linktoimage.com/image/is/here.png"));
 
             DatabaseReference serviceReqRef = dbRef.getRef().child("service-requests").push();
-            ServiceRequest serviceRequest = new ServiceRequest(serviceReqRef.getKey(), account, aForm, aDocs, aService);
+            ServiceRequest serviceRequest = new ServiceRequest(serviceReqRef.getKey(), ServiceRequestStatus.WAITING_FOR_REVIEW, account, aForm, aDocs, aService);
 
             serviceReqRef.setValue(serviceRequest);
 

@@ -5,11 +5,13 @@ import android.os.Parcelable;
 import me.kianbazza.servicenovigrad.accounts.Account;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ServiceRequest implements Parcelable {
 
     // Instance Variables
     private String requestID;
+    private ServiceRequestStatus requestStatus;
     private Account customer;
 
     private ArrayList<ServiceFormEntry<String, String>> customerInfo;
@@ -23,8 +25,9 @@ public class ServiceRequest implements Parcelable {
     }
 
     // Main Constructor
-    public ServiceRequest(String requestID, Account customer, ArrayList<ServiceFormEntry<String, String>> customerInfo, ArrayList<ServiceDocument> requiredDocuments, Service service) {
+    public ServiceRequest(String requestID, ServiceRequestStatus requestStatus, Account customer, ArrayList<ServiceFormEntry<String, String>> customerInfo, ArrayList<ServiceDocument> requiredDocuments, Service service) {
         this.requestID = requestID;
+        this.requestStatus = requestStatus;
         this.customer = customer;
         this.customerInfo = customerInfo;
         this.requiredDocuments = requiredDocuments;
@@ -35,7 +38,10 @@ public class ServiceRequest implements Parcelable {
 
     protected ServiceRequest(Parcel in) {
         requestID = in.readString();
+        requestStatus = ServiceRequestStatus.fromString(in.readString());
         customer = in.readParcelable(Account.class.getClassLoader());
+        customerInfo = new ArrayList<>(Arrays.asList((ServiceFormEntry<String, String>[]) in.readParcelableArray(ServiceFormEntry.class.getClassLoader())));
+        requiredDocuments = new ArrayList<>(Arrays.asList((ServiceDocument[]) in.readParcelableArray(ServiceDocument.class.getClassLoader())));
         service = in.readParcelable(Service.class.getClassLoader());
     }
 
@@ -59,7 +65,10 @@ public class ServiceRequest implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(requestID);
+        dest.writeString(requestStatus.name());
         dest.writeParcelable(customer, flags);
+        dest.writeParcelableArray(customerInfo.toArray(new ServiceFormEntry[0]), flags);
+        dest.writeParcelableArray(requiredDocuments.toArray(new ServiceDocument[0]), flags);
         dest.writeParcelable(service, flags);
     }
 
@@ -73,6 +82,14 @@ public class ServiceRequest implements Parcelable {
 
     public void setRequestID(String requestID) {
         this.requestID = requestID;
+    }
+
+    public ServiceRequestStatus getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(ServiceRequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
     }
 
     public Account getCustomer() {
