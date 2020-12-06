@@ -174,7 +174,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
                 employeeServicesRecyclerView.setAdapter(branchServicesRecyclerAdapter);
                 branchServicesRecyclerAdapter.notifyDataSetChanged();
 
-                createDummyServiceRequest();
+                // createDummyServiceRequest();
 
             }
 
@@ -264,7 +264,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ServiceRequest serviceRequest = snapshot.getValue(ServiceRequest.class);
 
-                    if (Helper.get().contains(branchServicesList, serviceRequest.getService())) {
+                    if (serviceRequest.getRequestStatus().equals(ServiceRequestStatus.WAITING_FOR_REVIEW) && Helper.get().contains(branchServicesList, serviceRequest.getService())) {
                         branchServiceRequestsList.add(serviceRequest);
                     }
 
@@ -341,7 +341,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
                 ServiceDocument document = new ServiceDocument(docName, "");
             });
 
-            aDocs.add(new ServiceDocument("Proof of Residence", "https://linktoimage.com/image/is/here.png"));
+            aDocs.add(new ServiceDocument("Proof of Residence", "https://www.cdn.fortisbc.com/libraries/images/default-source/accounts-and-billing/19-330-3_electric-bill-sample_final.jpg"));
 
             DatabaseReference serviceReqRef = dbRef.getRef().child("service-requests").push();
             ServiceRequest serviceRequest = new ServiceRequest(serviceReqRef.getKey(), ServiceRequestStatus.WAITING_FOR_REVIEW, account, aForm, aDocs, aService);

@@ -5,13 +5,13 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
 import me.kianbazza.servicenovigrad.R;
 import me.kianbazza.servicenovigrad.employee.adapters.CustomerInfoRecyclerAdapter;
 import me.kianbazza.servicenovigrad.employee.adapters.ProvidedDocumentsRecyclerAdapter;
@@ -19,6 +19,8 @@ import me.kianbazza.servicenovigrad.misc.Helper;
 import me.kianbazza.servicenovigrad.services.ServiceDocument;
 import me.kianbazza.servicenovigrad.services.ServiceFormEntry;
 import me.kianbazza.servicenovigrad.services.ServiceRequest;
+import me.kianbazza.servicenovigrad.services.ServiceRequestStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -104,10 +106,15 @@ public class ReviewServiceRequestDialog extends AppCompatDialogFragment implemen
 
     private void approveServiceRequest() {
 
+        dbRef.child("service-requests").child(serviceRequest.getRequestID()).child("requestStatus").setValue(ServiceRequestStatus.APPROVED);
+        Toast.makeText(getContext(), "The service request was approved.", Toast.LENGTH_SHORT).show();
+
     }
 
     private void rejectServiceRequest() {
 
+        dbRef.child("service-requests").child(serviceRequest.getRequestID()).child("requestStatus").setValue(ServiceRequestStatus.REJECTED);
+        Toast.makeText(getContext(), "The service request was rejected.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
