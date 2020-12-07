@@ -7,3 +7,11 @@ Build Status
 Admin Credentials:  
   username: **admin**  
   password: **admin**  
+  
+Employee Credentials:  
+username: **employee**  
+password: **employee**
+  
+Customer Credentials:  
+username: **customer**  
+password: **customer**
