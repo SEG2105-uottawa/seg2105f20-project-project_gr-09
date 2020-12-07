@@ -48,4 +48,22 @@
     <string name="employee_reviewRequest_title_customerInfo">Customer Info</string>
     <string name="employee_reviewRequest_title_providedDocuments">Provided Documents</string>
 
+    <string-array name="branchSearchMethod_array">
+        <item>No Filter</item>
+        <item>By Address</item>
+        <item>By Working Hours</item>
+        <item>By Service</item>
+    </string-array>
+
+    <string-array name="DaysOfTheWeek_array">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+    </string-array>
+
+    <string name="customer_serviceRequests_title">My Service Requests</string>
+    <string name="customer_branchSearch_title">Find A Branch</string>
+
 </resources>

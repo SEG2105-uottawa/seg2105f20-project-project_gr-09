@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,7 +10,7 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content" android:id="@+id/customer_generalInfoLayout">
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -18,13 +18,15 @@
             <TextView
                     android:text="@string/logged_in"
                     android:layout_width="293dp"
-                    android:layout_height="match_parent" android:id="@+id/customer_loggedInTextVIew" android:textSize="24sp"
+                    android:layout_height="match_parent" android:id="@+id/customer_loggedInTextVIew"
+                    android:textSize="24sp"
                     android:textStyle="bold" android:layout_gravity="left" android:gravity="center_vertical"
                     android:layout_weight="1"/>
             <Button
                     android:text="@string/action_logout"
                     android:layout_width="100dp"
-                    android:layout_height="wrap_content" android:id="@+id/btn_customer_logout" android:layout_gravity="right"
+                    android:layout_height="wrap_content" android:id="@+id/btn_customer_logout"
+                    android:layout_gravity="right"
                     android:layout_weight="1"/>
         </LinearLayout>
         <Space
@@ -37,7 +39,8 @@
             <TextView
                     android:text="@string/usernameKey"
                     android:layout_width="194dp"
-                    android:layout_height="wrap_content" android:id="@+id/customer_usernameTextView" android:layout_weight="1"
+                    android:layout_height="wrap_content" android:id="@+id/customer_usernameTextView"
+                    android:layout_weight="1"
                     android:textSize="18sp" android:textStyle="bold"/>
             <TextView
                     android:text="TextView"
@@ -53,13 +56,89 @@
             <TextView
                     android:text="@string/roleKey"
                     android:layout_width="105dp"
-                    android:layout_height="wrap_content" android:id="@+id/customer_roleTextView" android:layout_weight="1"
+                    android:layout_height="wrap_content" android:id="@+id/customer_roleTextView"
+                    android:layout_weight="1"
                     android:textSize="18sp" android:textStyle="bold"/>
             <TextView
                     android:text="TextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/customer_viewRoleTextView" android:textSize="18sp"
+                    android:layout_height="wrap_content" android:id="@+id/customer_viewRoleTextView"
+                    android:textSize="18sp"
                     android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/customer_serviceRequestsLayout"
+            android:layout_below="@id/customer_generalInfoLayout">
+        <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+        <TextView
+                android:text="@string/customer_serviceRequests_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/customer_serviceRequestsTextView"
+                android:textSize="18sp"
+                android:textColor="#000000" android:textStyle="bold"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/customer_searchForBranchLayout"
+            android:layout_below="@id/customer_serviceRequestsLayout">
+        <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+        <TextView
+                android:text="@string/customer_branchSearch_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/customer_serviceRequestsTextView2"
+                android:textSize="18sp"
+                android:textColor="#000000" android:textStyle="bold"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/customer_branchSearchMethodSpinner"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/customer_branchSearch_byAddressLayout"
+                    android:visibility="invisible" android:layout_below="@id/customer_branchSearchMethodSpinner">
+                <SearchView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" android:id="@+id/searchByAddressSearchView"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/customer_branchSearch_byWorkingHoursLayout"
+                    android:visibility="invisible" android:layout_below="@id/customer_branchSearchMethodSpinner">
+                <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/searchByWorkingHours_DayOfTheWeekSpinner"
+                        android:layout_weight="1"/>
+                <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/searchByWorkingHours_TimePickerTextView"
+                        android:layout_weight="1" android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/customer_branchSearch_byServicesLayout"
+                    android:visibility="invisible" android:layout_below="@id/customer_branchSearchMethodSpinner">
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/searchByService_serviceSpinner"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/customer_branchesRecyclerView"/>
+    </LinearLayout>
+</RelativeLayout>

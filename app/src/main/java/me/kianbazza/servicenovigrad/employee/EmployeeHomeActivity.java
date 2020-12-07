@@ -84,7 +84,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
         branchPhoneNumber.setText(branch.getPhoneNumber());
         branchWorkingHours.setText("Opens: " + branch.getOpeningTime() + "    Closes: " + branch.getClosingTime());
 
-        if (!branch.isDoneSetup()) {
+        if (!branch.getDoneSetup()) {
             Bundle bundle = new Bundle();
             bundle.putParcelable("Branch", branch);
 
