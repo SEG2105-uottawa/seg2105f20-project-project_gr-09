@@ -18,6 +18,7 @@ import me.kianbazza.servicenovigrad.accounts.Role;
 import me.kianbazza.servicenovigrad.admin.fragments.ServiceDialog;
 import me.kianbazza.servicenovigrad.general.LoginActivity;
 import me.kianbazza.servicenovigrad.admin.adapters.ServicesRecyclerAdapter;
+import me.kianbazza.servicenovigrad.misc.VerticalSpaceItemDecoration;
 import me.kianbazza.servicenovigrad.services.Service;
 import org.jetbrains.annotations.NotNull;
 
@@ -75,6 +76,7 @@ public class AdminHomeActivity extends AppCompatActivity implements ServicesRecy
         servicesList = new ArrayList<>();
         adminServicesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adminServicesRecyclerView.setHasFixedSize(true);
+        adminServicesRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(30));
 
         getServicesListFromFirebase();
 

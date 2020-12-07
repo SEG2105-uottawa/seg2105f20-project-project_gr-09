@@ -42,6 +42,10 @@ public class ServiceDocument implements Parcelable {
         return linkToUpload;
     }
 
+    public void setLinkToUpload(String linkToUpload) {
+        this.linkToUpload = linkToUpload;
+    }
+
     @Override
     public int describeContents() {
         return 0;

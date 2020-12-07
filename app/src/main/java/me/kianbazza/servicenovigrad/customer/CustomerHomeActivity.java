@@ -17,9 +17,12 @@ import me.kianbazza.servicenovigrad.R;
 import me.kianbazza.servicenovigrad.accounts.Account;
 import me.kianbazza.servicenovigrad.accounts.Branch;
 import me.kianbazza.servicenovigrad.customer.adapters.BranchesRecyclerAdapter;
+import me.kianbazza.servicenovigrad.customer.adapters.ServiceRequestsRecyclerAdapter;
+import me.kianbazza.servicenovigrad.customer.fragments.CreateServiceRequestDialog;
 import me.kianbazza.servicenovigrad.general.LoginActivity;
 import me.kianbazza.servicenovigrad.misc.VerticalSpaceItemDecoration;
 import me.kianbazza.servicenovigrad.services.Service;
+import me.kianbazza.servicenovigrad.services.ServiceRequest;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
@@ -36,9 +39,20 @@ public class CustomerHomeActivity extends AppCompatActivity implements BranchesR
     // Database
     private DatabaseReference dbRef;
 
-    // Interface - Services
+    // Interface - General
     private TextView username, role;
     private Button btnLogout;
+
+    // Variables - Service Requests
+    private ArrayList<ServiceRequest> myServiceRequestsList;
+    private ServiceRequestsRecyclerAdapter myServiceRequestsRecyclerAdapter;
+    private ArrayAdapter<String> serviceRequestsServiceSpinnerAdapter;
+
+    // Interface - Service Requests
+    RecyclerView myServiceRequestsRecyclerView;
+    Spinner serviceRequestsServiceSpinner;
+    Button btn_newServiceRequest;
+
 
     // Variables - Branches
     private ArrayList<Branch> branchesList;
@@ -75,7 +89,12 @@ public class CustomerHomeActivity extends AppCompatActivity implements BranchesR
 
         account = getIntent().getParcelableExtra("Account");
 
-        // Services
+
+
+
+
+
+        // General
         username = findViewById(R.id.customer_viewUsernameTextView);
         role = findViewById(R.id.customer_viewRoleTextView);
         btnLogout = findViewById(R.id.btn_customer_logout);
@@ -84,6 +103,12 @@ public class CustomerHomeActivity extends AppCompatActivity implements BranchesR
         role.setText(account.getRole().toString());
 
         btnLogout.setOnClickListener(l -> startActivity(new Intent(CustomerHomeActivity.this, LoginActivity.class)));
+
+
+
+
+
+
 
         // Branches
         branchesList = new ArrayList<>();
@@ -199,14 +224,37 @@ public class CustomerHomeActivity extends AppCompatActivity implements BranchesR
         servicesList = new ArrayList<>();
         serviceNamesList = new ArrayList<>();
 
-        getServicesListFromFirebase();
-
         searchByService_layout = findViewById(R.id.customer_branchSearch_byServicesLayout);
         searchByService_serviceSpinner = findViewById(R.id.searchByService_serviceSpinner);
 
         searchByService_layout.setVisibility(View.INVISIBLE);
 
         searchByService_serviceSpinner.setOnItemSelectedListener(this);
+
+
+
+        // Service Requests
+        myServiceRequestsList = new ArrayList<>();
+
+        myServiceRequestsRecyclerView = findViewById(R.id.customer_myServiceRequestsRecyclerView);
+        btn_newServiceRequest = findViewById(R.id.btn_createServiceRequest);
+        serviceRequestsServiceSpinner = findViewById(R.id.customer_serviceRequests_servicesSpinner);
+
+        getServiceRequestsFromFirebase();
+
+        getServicesListFromFirebase();
+
+        btn_newServiceRequest.setOnClickListener(l -> {
+
+            String serviceName = serviceRequestsServiceSpinner.getSelectedItem().toString();
+
+            for (Service s : servicesList) {
+                if (s.getName().equalsIgnoreCase(serviceName)) {
+                    openServiceRequestDialog(s);
+                    break;
+                }
+            }
+        });
 
 
 
@@ -361,6 +409,12 @@ public class CustomerHomeActivity extends AppCompatActivity implements BranchesR
 
                 serviceSpinnerAdapter.notifyDataSetChanged();
 
+                serviceRequestsServiceSpinnerAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, serviceNamesList);
+                serviceRequestsServiceSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                serviceRequestsServiceSpinner.setAdapter(serviceRequestsServiceSpinnerAdapter);
+
+                serviceRequestsServiceSpinnerAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -433,6 +487,63 @@ public class CustomerHomeActivity extends AppCompatActivity implements BranchesR
 
             }
         });
+
+    }
+
+    private void getServiceRequestsFromFirebase() {
+        Query query = dbRef.child("service-requests");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                clearServiceRequestsList();
+
+                dataSnapshot.getChildren().forEach(snapshot -> {
+                    String username = snapshot.child("customer").child("username").getValue(String.class);
+
+                    if (username.equalsIgnoreCase(account.getUsername())) {
+                        ServiceRequest serviceRequest = snapshot.getValue(ServiceRequest.class);
+                        myServiceRequestsList.add(serviceRequest);
+                    }
+
+                });
+
+                myServiceRequestsRecyclerAdapter = new ServiceRequestsRecyclerAdapter(getApplicationContext(), myServiceRequestsList);
+                myServiceRequestsRecyclerView.setAdapter(myServiceRequestsRecyclerAdapter);
+                myServiceRequestsRecyclerAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void clearServiceRequestsList() {
+
+        if (myServiceRequestsList!=null) {
+            myServiceRequestsList.clear();
+
+            if (myServiceRequestsRecyclerAdapter!=null) {
+                myServiceRequestsRecyclerAdapter.notifyDataSetChanged();
+            }
+        }
+
+    }
+
+    private void openServiceRequestDialog(Service service) {
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Account", account);
+        bundle.putParcelable("Service", service);
+
+        CreateServiceRequestDialog serviceRequestDialog = new CreateServiceRequestDialog();
+        serviceRequestDialog.setArguments(bundle);
+
+        serviceRequestDialog.show(getSupportFragmentManager(), "Create Service Request Dialog");
 
     }
 }

@@ -20,6 +20,7 @@ import me.kianbazza.servicenovigrad.employee.adapters.ServiceRequestsRecyclerAda
 import me.kianbazza.servicenovigrad.employee.adapters.BranchServicesRecyclerAdapter;
 import me.kianbazza.servicenovigrad.misc.FragmentToActivity;
 import me.kianbazza.servicenovigrad.misc.Helper;
+import me.kianbazza.servicenovigrad.misc.VerticalSpaceItemDecoration;
 import me.kianbazza.servicenovigrad.services.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -100,6 +101,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
         employeeServicesRecyclerView = findViewById(R.id.employee_recyclerView_listBranchServices);
         employeeServicesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         employeeServicesRecyclerView.setHasFixedSize(true);
+        employeeServicesRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(30));
 
         getServicesListFromFirebase();
         getBranchServicesListFromFirebase();
@@ -110,6 +112,7 @@ public class EmployeeHomeActivity extends AppCompatActivity implements FragmentT
         employeeServiceRequestsRecyclerView = findViewById(R.id.employee_recyclerView_listServiceRequests);
         employeeServiceRequestsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         employeeServiceRequestsRecyclerView.setHasFixedSize(true);
+        employeeServiceRequestsRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(30));
 
         getBranchServiceRequestsListFromFirebase();
 

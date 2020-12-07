@@ -81,6 +81,17 @@
                 android:layout_height="wrap_content" android:id="@+id/customer_serviceRequestsTextView"
                 android:textSize="18sp"
                 android:textColor="#000000" android:textStyle="bold"/>
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/customer_myServiceRequestsRecyclerView">
+        </androidx.recyclerview.widget.RecyclerView>
+        <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/customer_serviceRequests_servicesSpinner"/>
+        <Button
+                android:text="@string/customer_serviceRequests_newServiceRequestAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/btn_createServiceRequest"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"

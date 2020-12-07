@@ -9,15 +9,21 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
             <TextView
                     android:text="TextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/serviceRequestNameView"/>
+                    android:layout_height="wrap_content" android:id="@+id/customer_serviceRequest_serviceNameTextView"/>
             <TextView
                     android:text="TextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/serviceRequestCustomerNameView"
-                    android:layout_below="@id/serviceRequestNameView"/>
+                    android:layout_height="wrap_content" android:id="@+id/customer_serviceRequest_requestIDTextView"
+                    android:layout_below="@id/customer_serviceRequest_serviceNameTextView"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/customer_serviceRequest_requestStatusTextView"
+                    android:layout_below="@id/customer_serviceRequest_requestIDTextView"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

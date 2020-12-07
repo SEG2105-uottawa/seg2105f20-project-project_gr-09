@@ -64,6 +64,13 @@
     </string-array>
 
     <string name="customer_serviceRequests_title">My Service Requests</string>
+    <string name="customer_serviceRequests_newServiceRequestAction">New Service Request (+)</string>
+
     <string name="customer_branchSearch_title">Find A Branch</string>
+
+    <!-- Customer - Create Service Request Dialog -->
+
+    <string name="customer_createRequest_title_requiredInfo">Required Customer Information</string>
+    <string name="customer_createRequest_title_requiredDocs">Required Documents</string>
 
 </resources>
